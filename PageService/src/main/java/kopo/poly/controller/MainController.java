@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.xml.sax.SAXException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
@@ -41,20 +40,14 @@ public class MainController {
     @GetMapping(value = "/covid/list1")
     public String list1() throws Exception {
         log.info(this.getClass().getName() + " list1 Start !!");
-        // 의료기관
-        List<HospitalDTO> hospitalList = mainService.getHospital();
-        // 보건소
-        List<BogunsoDTO> bogunsoList = mainService.getBogunso();
+
         log.info(this.getClass().getName() + " list1 End !!");
         return "main/list1";
     }
     @GetMapping(value = "/covid/list2")
     public String list2() throws Exception {
         log.info(this.getClass().getName() + " list2 Start !!");
-        // 의료기관
-        List<HospitalDTO> hospitalList = mainService.getHospital();
-        // 보건소
-        List<BogunsoDTO> bogunsoList = mainService.getBogunso();
+
         log.info(this.getClass().getName() + " list2 End !!");
         return "main/list2";
     }
@@ -116,6 +109,4 @@ public class MainController {
         log.info(this.getClass().getName() + " RegForm 페이지 종료!");
         return "main/RegForm";
     }
-
-
 }
