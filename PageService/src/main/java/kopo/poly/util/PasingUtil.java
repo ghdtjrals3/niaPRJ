@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @Slf4j
@@ -30,7 +31,6 @@ public class PasingUtil {
                 finalUrl.append(keyArr[i]).append("=").append(valueArr[i]).append("&");
             }
         }
-
         DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
         Document document = dBuilder.parse(finalUrl.toString());

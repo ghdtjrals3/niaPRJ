@@ -12,11 +12,11 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IMainService {
-    List<No1IftDTO> getNo1Ift() throws ParserConfigurationException, IOException, SAXException;
+    List<No1IftDTO> getNo1Ift(String year, String dsvd) throws ParserConfigurationException, IOException, SAXException;
 
-    List<No4IftDTO> getNo4Ift() throws ParserConfigurationException, IOException, SAXException;
+    List<No4IftDTO> getNo4Ift(String year, String dsvd) throws ParserConfigurationException, IOException, SAXException;
 
-    List<HospitalDTO> getHospital() throws IOException;
+    List<HospitalDTO> getHospital() throws Exception;
 
     List<BogunsoDTO> getBogunso() throws IOException;
 }

@@ -17,6 +17,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +28,11 @@ public class MainService implements IMainService {
 
 
     @Override
-    public List<No1IftDTO> getNo1Ift() throws ParserConfigurationException, IOException, SAXException {
+    public List<No1IftDTO> getNo1Ift(String year, String dsvd) throws ParserConfigurationException, IOException, SAXException {
+        log.info("start!!");
         String url = "getCallStat01Api";
-        String []keyArr = {"numOfRows","pageNo"};
-        String []valueArr = {"500", "1"};
+        String []keyArr = {"numOfRows","pageNo", "year", "dvsd"};
+        String []valueArr = {"500", "1", year, URLEncoder.encode(dsvd, "UTF-8")};
 
         List<No1IftDTO> no1IftList = new ArrayList<>();
 
@@ -71,10 +73,10 @@ public class MainService implements IMainService {
     }
 
     @Override
-    public List<No4IftDTO> getNo4Ift() throws ParserConfigurationException, IOException, SAXException {
+    public List<No4IftDTO> getNo4Ift(String year, String dsvd) throws ParserConfigurationException, IOException, SAXException {
         String url = "getCallStat04Api";
-        String []keyArr = {"numOfRows","pageNo"};
-        String []valueArr = {"500", "1"};
+        String []keyArr = {"numOfRows","pageNo", "year", "dvsd"};
+        String []valueArr = {"500", "1", year, URLEncoder.encode(dsvd, "UTF-8")};
 
         List<No4IftDTO> no4IftList = new ArrayList<>();
 
@@ -157,32 +159,31 @@ public class MainService implements IMainService {
     }
 
     @Override
-    public List<HospitalDTO> getHospital() throws IOException {
+    public List<HospitalDTO> getHospital() throws IOException, ParserConfigurationException, SAXException {
         log.info(this.getClass().getName() + " getHospital Start !!");
-
-        File f = new File("src/main/resources/static/file/downloadContents.txt");
-
-        FileReader fileReader = new FileReader(f);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String url = "getpubReliefHospList";
+        String []keyArr = {"numOfRows","pageNo"};
+        String []valueArr = {"500", "1"};
 
         List<HospitalDTO> hospitalList = new ArrayList<>();
 
-        String line = "";
-        while((line = bufferedReader.readLine()) != null) {
-            log.info(line);
-            String [] splitLine = line.split(",");
+        Document document = PasingUtil.xmlPasing(url, keyArr, valueArr);
+        document.getDocumentElement().normalize();
+        NodeList nList = document.getElementsByTagName("item");
+
+        for(int temp=0; temp<nList.getLength(); temp++) {
+            Node nNode = nList.item(temp);
+            Element eElement = (Element) nNode;
             HospitalDTO hospitalDTO = new HospitalDTO();
-            hospitalDTO.setLocation(splitLine[0]);
-            hospitalDTO.setType(splitLine[1]);
-            hospitalDTO.setName(splitLine[2]);
-            hospitalDTO.setPhoneNumber(splitLine[3]);
-            hospitalDTO.setAddress(splitLine[4]);
-            hospitalDTO.setLatitude(splitLine[5]);
-            hospitalDTO.setLongitude(splitLine[6]);
+
+            hospitalDTO.setType(PasingUtil.getTagValue("spclAdmTyCd", eElement));
+            hospitalDTO.setName(PasingUtil.getTagValue("yadmNm", eElement));
+            hospitalDTO.setLocation(PasingUtil.getTagValue("sidoNm", eElement));
+            hospitalDTO.setPhoneNumber(PasingUtil.getTagValue("telno", eElement));
+            hospitalDTO.setDetailLocation(PasingUtil.getTagValue("sgguNm", eElement));
+
             hospitalList.add(hospitalDTO);
         }
-        bufferedReader.close();
-
 
         log.info(this.getClass().getName() + " getHospital End !!");
         return hospitalList;

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="airbnb, booking, city guide, directory, events, hotel booking, listings, marketing, places, restaurant, restaurant">
+    <meta name="description" content="Guido - Directory & Listing HTML Template">
+    <meta name="CreativeLayers" content="ATFN">
+    <!-- css file -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <!-- Title -->
+    <title>Guido - Directory & Listing HTML Template</title>
+    <!-- Favicon -->
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon" type="image/x-icon"/>
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon"/>
+
+    <style>
+        div.minimalistBlack {
+            width: 65%;
+            text-align: center;
+            border-collapse: collapse;
+            margin: auto;
+
+        }
+
+        .divTable.minimalistBlack .divTableCell, .divTable.minimalistBlack .divTableHead {
+            border: 1px solid #E2E6EF;
+            padding: 12px 8px;
+
+        }
+
+        .divTable.minimalistBlack .divTableBody .divTableCell {
+            font-size: 17px;
+        }
+
+        .divTable.minimalistBlack .divTableHeading {
+            background: #CFCFCF;
+            background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+            border-bottom: 3px solid #000000;
+        }
+
+        .divTable.minimalistBlack .divTableHeading .divTableHead {
+            font-size: 15px;
+            font-weight: bold;
+            color: #000000;
+            text-align: center;
+        }
+
+        .minimalistBlack .tableFootStyle {
+            font-size: 14px;
+            font-weight: bold;
+            color: #000000;
+            border-top: 3px solid #000000;
+        }
+
+        .minimalistBlack .tableFootStyle {
+            font-size: 14px;
+        }
+
+        /* DivTable.com */
+        .divTable {
+            display: table;
+        }
+
+        .divTableRow {
+            display: table-row;
+        }
+
+        .divTableHeading {
+            display: table-header-group;
+        }
+
+        .divTableCell, .divTableHead {
+            display: table-cell;
+        }
+
+        .divTableHeading {
+            display: table-header-group;
+        }
+
+        .divTableFoot {
+            display: table-footer-group;
+        }
+
+        .divTableBody {
+            display: table-row-group;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Main Header Nav -->
+<header class="header-nav menu_style_home_one style2 navbar-scrolltofixed stricky main-menu">
+    <div class="container-fluid p0">
+        <!-- Ace Responsive Menu -->
+        <nav>
+            <!-- Menu Toggle btn-->
+            <div class="menu-toggle">
+                <img class="nav_logo_img img-fluid" src="images/header-logo.svg" alt="header-logo.svg">
+                <button type="button" id="menu-btn">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <a href="/covid/index" class="navbar_brand float-left dn-smd">
+                <strong><h3 style="font-size: 60px; color:#3e4c66; font-weight: bold;">질병 지키미</h3></strong>
+            </a>
+            <!-- Responsive Menu Structure-->
+            <!--Note: declare the Menu style in the data-menu-style="horizontal" (options: horizontal, vertical, accordion) -->
+            <div class="ht_left_widget float-left">
+                <ul>
+                    <li class="list-inline-item">
+                        <div class="ht_search_widget">
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div style="padding-right: 5%;">
+                <ul id="respMenu" class="ace-responsive-menu text-right" data-menu-style="horizontal">
+                    <li>
+                        <a href="/covid/list1"><span class="title">감염병 발생정보</span></a>
+                        <!-- Level Two-->
+                        <ul>
+                            <li><a href="/covid/list1">감염병 제1군</a></li>
+                            <li><a href="/covid/list2">감염병 제4군</a></li>
+                        </ul>
+                    </li>
+                    &nbsp;&nbsp;&nbsp;
+
+                    <li>
+                        <a href="http://3.39.252.243:11000/news/twonewslist"><span class="title">예방생활 수칙</span></a>
+                        <ul>
+                            <li><a href="http://3.39.252.243:11000/photo/uploadImgycle">분리배출 방법</a></li>
+                            <li><a href="http://3.39.252.243:11000/news/twonewslist">환경 뉴스</a></li>
+
+
+                        </ul>
+                        <!-- Level Two-->
+                    </li>&nbsp;&nbsp;&nbsp;
+
+                    <li>
+                        <a href="/covid/hospital"><span class="title">병원</span></a>
+                        <!-- Level Two-->
+                    </li>&nbsp;&nbsp;&nbsp;
+
+                    <li>
+                        <a href="/covid/publichospital"><span class="title">보건소</span></a>
+                        <!-- Level Two-->
+
+                    </li>&nbsp;&nbsp;&nbsp;
+
+                    <li>
+
+                    <li class="list-inline-item list_s">
+                        <a href="/covid/RegForm" class="btn flaticon-avatar">
+                            <span class="dn-1200" style="color: red;"><strong>감염병 신고</strong></span></a></li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<br/>
+
+<br><br><br>
+<h2 style="text-align: center; color: #666666;"><strong>감염병 제1군</strong></h2><br>
+
+<div class="select-box" style="text-align: center">
+    <ul class="form-year">
+        <h4><strong>
+            <li class="select-title">기간</li>
+        </strong></h4>
+        <li class="select-cnt">
+            <label>조회 연도</label>
+            <select class="w40" id="year">
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+            </select>
+        </li>
+    </ul>
+    <ul class="form-location">
+        <h4><strong>
+            <li class="select-title">지역</li>
+        </strong></h4>
+        <li class="select-cnt">
+            <label>지역</label>
+            <select class="w40" id="dsvd">
+                <option value="서울" selected="selected">서울</option>
+                <option value="대전">대전</option>
+                <option value="대구">대구</option>
+                <option value="부산">부산</option>
+                <option value="울산">울산</option>
+                <option value="인천">인천</option>
+                <option value="제주">제주</option>
+                <option value="광주">광주</option>
+                <option value="세종">세종</option>
+                <option value="경기">경기</option>
+                <option value="강원">강원</option>
+                <option value="충북">충북</option>
+                <option value="충남">충남</option>
+                <option value="경북">경북</option>
+                <option value="경남">경남</option>
+                <option value="전북">전북</option>
+                <option value="전남">전남</option>
+            </select>
+        </li>
+    </ul>
+</div>
+
+<br>
+    <div class="footer_mailchimp_form" style="text-align: center; ">
+        <input type="button" value="조회하기" onclick="getNo1Ift()" style="background-color: #666666; width: 150px; height: 50px; border-radius: 5px; border: none; color: #fff;"></input>
+    </div>
+
+<br>
+<div class="divTable minimalistBlack">
+
+    <div class="divTableBody" style="font-weight: bold; background-color: #666666; color: #fff;">
+        <div class="divTableRow">
+            <div class="divTableHead"></div>
+            <div class="divTableHead">발생 수</div>
+            <div class="divTableHead">발생률</div>
+            <div class="divTableHead">사망수</div>
+
+        </div>
+    </div>
+
+    <div class="divTableBody">
+        <div class="divTableRow">
+            <div class="divTableCell" style="width: 200px;">콜레라</div>
+            <div class="divTableCell" style="width: 200px;" id="chlrOcnm"></div>
+            <div class="divTableCell" style="width: 200px;" id="chlrOcrt"></div>
+            <div class="divTableCell" style="width: 200px;" id="chlrNmdth"></div>
+
+        </div>
+        <div class="divTableRow">
+            <div class="divTableCell" style="width: 100px;">장티푸스</div>
+            <div class="divTableCell" style="width: 200px;" id="typdOcnm"></div>
+            <div class="divTableCell" style="width: 200px;" id="typdOcrt"></div>
+            <div class="divTableCell" style="width: 200px;" id="typdNmdth"></div>
+
+        </div>
+        <div class="divTableRow">
+            <div class="divTableCell" style="width: 100px;">파라티푸스</div>
+            <div class="divTableCell" style="width: 200px;" id="prfvrOcnm"></div>
+            <div class="divTableCell" style="width: 200px;" id="prfvrOcrt"></div>
+            <div class="divTableCell" style="width: 200px;" id="prfvrNmdth"></div>
+
+        </div>
+
+        <div class="divTableRow">
+            <div class="divTableCell" style="width: 100px;">세균성이질</div>
+            <div class="divTableCell" style="width: 200px;" id="bctdsOcnm"></div>
+            <div class="divTableCell" style="width: 200px;" id="bctdsOcrt"></div>
+            <div class="divTableCell" style="width: 200px;" id="bctdsNmdth"></div>
+
+        </div>
+        <div class="divTableRow">
+            <div class="divTableCell" style="width: 250px;">장출형성대장균감염증</div>
+            <div class="divTableCell" style="width: 200px;" id="etclifOcnm"></div>
+            <div class="divTableCell" style="width: 200px;" id="etclifOcrt"></div>
+            <div class="divTableCell" style="width: 200px;" id="etclifNmdth"></div>
+
+        </div>
+        <div class="divTableRow">
+            <div class="divTableCell" style="width: 100px;">A형간염</div>
+            <div class="divTableCell" style="width: 200px;" id="hptaOcnm"></div>
+            <div class="divTableCell" style="width: 200px;" id="hptaOcrt"></div>
+            <div class="divTableCell" style="width: 200px;" id="hptaNmdth"></div>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+
+    </div>
+</div>
+
+
+<br><br><br><br>
+</body>
+
+
+<section class="footer_one home1">
+    <div class="container pb70">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                <div class="footer_contact_widget">
+                    <h4>Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-white df"><span class="flaticon-pin mr15"></span><a href="#">서울특별시 강서구 화곡동
+                            우장산로10길 112</a></li>
+                        <li class="text-white"><span class="flaticon-phone mr15"></span><a href="#">82+
+                            010-9962-6997</a></li>
+                        <li class="text-white"><span class="flaticon-email mr15"></span><a
+                                href="#">lowell0322@naver.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+            <div class="container pt20 pb30">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <div class="copyright-widget mt10 mb15-767">
+                            <p>© 질병지키미</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="footer_logo_widget text-center mb15-767">
+                            <div class="wrapper">
+                                <div class="logo text-center">
+
+                                    <span class="logo_title text-white pl15">질병지키미</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</section>
+<a class="scrollToHome" href="#"><i class="fa fa-angle-up"></i></a>
+</div>
+<!-- Wrapper End -->
+<script src="/js/jquery-3.6.0.js"></script>
+<script src="/js/jquery-migrate-3.0.0.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.mmenu.all.js"></script>
+<script src="/js/ace-responsive-menu.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/isotop.js"></script>
+<script src="/js/snackbar.min.js"></script>
+<script src="/js/simplebar.js"></script>
+<script src="/js/parallax.js"></script>
+<script src="/js/scrollto.js"></script>
+<script src="/js/jquery-scrolltofixed-min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/progressbar.js"></script>
+<script src="/js/slider.js"></script>
+<script src="/js/timepicker.js"></script>
+<script src="/js/wow.min.js"></script>
+<!-- Custom script for all pages -->
+<script src="/js/script.js"></script>
+</body>
+<script type="text/javascript">
+    function getNo1Ift() {
+        var year = document.getElementById("year").value;
+        var dsvd = document.getElementById("dsvd").value;
+
+        console.log(year);
+        console.log(dsvd);
+
+        var param = {
+            year : year,
+            dsvd : dsvd
+        };
+
+        $.ajax({
+            type : 'POST',
+            url : '/covid/getNo1Ift',
+            data : JSON.stringify(param),
+            dataType : 'json',
+            contentType : 'application/json',
+            success(result) {
+                if(result.length===0) {
+                    document.getElementById("chlrOcnm").innerHTML = 0;
+                    document.getElementById("chlrOcrt").innerHTML = '0%';
+                    document.getElementById("chlrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("typdOcnm").innerHTML = 0;
+                    document.getElementById("typdOcrt").innerHTML = '0%';
+                    document.getElementById("typdNmdth").innerHTML = 0  + "명";
+                    document.getElementById("prfvrOcnm").innerHTML = 0;
+                    document.getElementById("prfvrOcrt").innerHTML = '0%';
+                    document.getElementById("prfvrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("bctdsOcnm").innerHTML = 0;
+                    document.getElementById("bctdsOcrt").innerHTML = '0%';
+                    document.getElementById("bctdsNmdth").innerHTML = 0  + "명";
+                    document.getElementById("etclifOcnm").innerHTML = 0;
+                    document.getElementById("etclifOcrt").innerHTML = '0%';
+                    document.getElementById("etclifNmdth").innerHTML = 0  + "명";
+                    document.getElementById("hptaOcnm").innerHTML = 0;
+                    document.getElementById("hptaOcrt").innerHTML = '0%';
+                    document.getElementById("hptaNmdth").innerHTML = 0  + "명";
+
+                } else {
+                    document.getElementById("chlrOcnm").innerHTML = result[0].chlrOcnm;
+                    document.getElementById("chlrOcrt").innerHTML = result[0].chlrOcrt + '%';
+                    document.getElementById("chlrNmdth").innerHTML = result[0].chlrNmdth + "명";
+                    document.getElementById("typdOcnm").innerHTML = result[0].typdOcnm;
+                    document.getElementById("typdOcrt").innerHTML = result[0].typdOcrt + '%';
+                    document.getElementById("typdNmdth").innerHTML = result[0].typdNmdth + "명";
+                    document.getElementById("prfvrOcnm").innerHTML = result[0].prfvrOcnm;
+                    document.getElementById("prfvrOcrt").innerHTML = result[0].prfvrOcrt + '%';
+                    document.getElementById("prfvrNmdth").innerHTML = result[0].prfvrNmdth + "명";
+                    document.getElementById("bctdsOcnm").innerHTML = result[0].bctdsOcnm;
+                    document.getElementById("bctdsOcrt").innerHTML = result[0].bctdsOcrt + '%';
+                    document.getElementById("bctdsNmdth").innerHTML = result[0].bctdsNmdth + "명";
+                    document.getElementById("etclifOcnm").innerHTML = result[0].etclifOcnm;
+                    document.getElementById("etclifOcrt").innerHTML = result[0].etclifOcrt + '%';
+                    document.getElementById("etclifNmdth").innerHTML = result[0].etclifNmdth + "명";
+                    document.getElementById("hptaOcnm").innerHTML = result[0].hptaOcnm;
+                    document.getElementById("hptaOcrt").innerHTML = result[0].hptaOcrt + '%';
+                    document.getElementById("hptaNmdth").innerHTML = result[0].hptaNmdth + "명";
+                }
+                console.log(result);
+            },
+            error(e) {
+                console.log(e);
+            }
+        });
+    }
+</script>
+</html>

@@ -8,6 +8,8 @@ import lombok.Setter;
 public class HospitalDTO {
     //시도
     private String location;
+    //시도
+    private String detailLocation;
     //종별
     private String type;
     //기관명
@@ -15,9 +17,4 @@ public class HospitalDTO {
     //전화번호
     private String phoneNumber;
     //주소
-    private String address;
-    //위도
-    private String latitude;
-    //경도
-    private String longitude;
 }

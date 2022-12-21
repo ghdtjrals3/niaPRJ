@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="airbnb, booking, city guide, directory, events, hotel booking, listings, marketing, places, restaurant, restaurant">
+    <meta name="description" content="Guido - Directory & Listing HTML Template">
+    <meta name="CreativeLayers" content="ATFN">
+    <!-- css file -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <!-- Title -->
+    <title>Guido - Directory & Listing HTML Template</title>
+    <!-- Favicon -->
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon" type="image/x-icon"/>
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <style>
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            justify-content: space-around;
+            padding: 0 0.2em;
+            text-align: center;
+            width: 5em;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 2.3px;
+            -webkit-text-stroke-color: #2b2a29;
+            cursor: pointer;
+        }
+
+        .star-rating :checked ~ label {
+            -webkit-text-fill-color: gold;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            -webkit-text-fill-color: #fff58c;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="preloader"></div>
+
+    <!-- Main Header Nav -->
+    <header class="header-nav menu_style_home_one style2 navbar-scrolltofixed stricky main-menu">
+        <div class="container-fluid p0">
+            <!-- Ace Responsive Menu -->
+            <nav>
+                <!-- Menu Toggle btn-->
+                <div class="menu-toggle">
+                    <img class="nav_logo_img img-fluid" src="images/header-logo.svg" alt="header-logo.svg">
+                    <button type="button" id="menu-btn">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <a href="/covid/index" class="navbar_brand float-left dn-smd">
+                    <strong><h3 style="font-size: 60px; color:#3e4c66; font-weight: bold;">질병 지키미</h3></strong>
+                </a>
+                <!-- Responsive Menu Structure-->
+                <!--Note: declare the Menu style in the data-menu-style="horizontal" (options: horizontal, vertical, accordion) -->
+                <div class="ht_left_widget float-left">
+                    <ul>
+                        <li class="list-inline-item">
+                            <div class="ht_search_widget">
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="padding-right: 5%;">
+                    <ul id="respMenu" class="ace-responsive-menu text-right" data-menu-style="horizontal">
+                        <li>
+                            <a href="/covid/list1"><span class="title">감염병 발생정보</span></a>
+                            <!-- Level Two-->
+                            <ul>
+                                <li><a href="/covid/list1">감염병 제1군</a></li>
+                                <li><a href="/covid/list2">감염병 제4군</a></li>
+                            </ul>
+                        </li>
+                        &nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="http://3.39.252.243:11000/news/twonewslist"><span class="title">예방생활 수칙</span></a>
+                            <ul>
+                                <li><a href="http://3.39.252.243:11000/photo/uploadImgycle">분리배출 방법</a></li>
+                                <li><a href="http://3.39.252.243:11000/news/twonewslist">환경 뉴스</a></li>
+
+
+                            </ul>
+                            <!-- Level Two-->
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="http://3.39.252.243:11000/market/MarketInfochg"><span
+                                    class="title">마이페이지</span></a>
+                            <!-- Level Two-->
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="http://3.39.252.243:11000/question/questionMarketList"><span
+                                    class="title">고객센터</span></a>
+                            <!-- Level Two-->
+                            <ul>
+
+                                <li><a href="http://3.39.252.243:11000/questionMarket/questionMarketList">사용자 질문 게시판</a>
+                                </li>
+                                <li><a href="http://3.39.252.243:11000/questionMarket/MyQuestionMarketList">나의 질문
+                                    게시판</a></li>
+                                <li><a href="http://3.39.252.243:11000/questionMarket/QnA">자주 묻는 질문</a></li>
+                                <li><a href="http://3.39.252.243:11000/questionMarket/questionMarketReg">1 : 1 문의하기</a>
+                                </li>
+
+                            </ul>
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+
+                        <li class="list-inline-item list_s">
+                            <a href="http://3.39.252.243:11000/auth/loginForm" class="btn flaticon-avatar">
+                                <span class="dn-1200">login</span></a></li>
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Modal -->
+    <div class="sign_up_modal modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md mt100" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body container pb20 pl0 pr0 pt0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="sign_up_tab nav nav-tabs" id="myTab" role="tablist">
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tab-content container" id="myTabContent">
+                        <div class="row mt40 tab-pane fade show active pl20 pr20" id="home" role="tabpanel"
+                             aria-labelledby="home-tab">
+                            <div class="col-lg-12">
+                                <div class="login_form">
+                                    <form action="#">
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt40 tab-pane fade pl20 pr20" id="profile" role="tabpanel"
+                         aria-labelledby="profile-tab">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header Nav For Mobile -->
+    <div id="page" class="stylehome1 h0">
+        <div class="mobile-menu">
+            <div class="header stylehome1">
+                <div class="main_logo_home2 text-left">
+
+
+                    </ul>
+                    </nav>
+                </div>
+
+                <!-- Search Field Modal -->
+                <section class="modal fade search_dropdown" id="staticBackdrop" data-backdrop="static"
+                         data-keyboard="false" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Inner Page Breadcrumb -->
+<section class="inner_page_breadcrumb">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6">
+                <div class="breadcrumb_content">
+                    <h2 class="breadcrumb_title">감염병 정보를 안내해드립니다.</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our LogIn Register -->
+<section class="our-log-reg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3">
+                <div class="sign_up_form inner_page">
+                    <ul class="nav nav-pills mb-4" id="pills-tab2" role="tablist">
+                        <li class="nav-item" role="presentation">
+
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent2">
+                        <div class="tab-pane fade show active" id="pills-home2" role="tabpanel"
+                             aria-labelledby="pills-home-tab2">
+                            <form action="#">
+
+                                <div class="form-group input-group" style="margin: auto;">
+                                    <button type="button" onclick="location.href='/covid/list1'"
+                                            style="width: 240px; height: 300px; border: none; background-color: #666666; border-radius: 20px; color: #fff; font-size: 23px;">
+                                        감염병 정보<br></button>&nbsp;&nbsp;&nbsp;
+                                    <button type="button" onclick="location.href='/auth/loginForm'"
+                                            style="width: 240px; height: 300px; border: none; background-color: #666666; border-radius: 20px; color: #fff; font-size: 23px;">
+                                        감염병 신고 <br>/<br> 진료<br></button>
+                                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Footer -->
+<section class="footer_one home1">
+    <div class="container pb70">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                <div class="footer_contact_widget">
+                    <h4>Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-white df"><span class="flaticon-pin mr15"></span><a href="#">서울특별시 강서구 화곡동
+                            우장산로10길 112</a></li>
+                        <li class="text-white"><span class="flaticon-phone mr15"></span><a href="#">82+
+                            010-9962-6997</a></li>
+                        <li class="text-white"><span class="flaticon-email mr15"></span><a
+                                href="#">lowell0322@naver.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+            <div class="container pt20 pb30">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <div class="copyright-widget mt10 mb15-767">
+                            <p>© 질병지키미</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="footer_logo_widget text-center mb15-767">
+                            <div class="wrapper">
+                                <div class="logo text-center">
+
+                                    <span class="logo_title text-white pl15">질병지키미</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+</section>
+<a class="scrollToHome" href="#"><i class="fa fa-angle-up"></i></a>
+<!-- Wrapper End -->
+<script src="/js/jquery-3.6.0.js"></script>
+<script src="/js/jquery-migrate-3.0.0.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.mmenu.all.js"></script>
+<script src="/js/ace-responsive-menu.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/snackbar.min.js"></script>
+<script src="/js/simplebar.js"></script>
+<script src="/js/parallax.js"></script>
+<script src="/js/scrollto.js"></script>
+<script src="/js/jquery-scrolltofixed-min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/progressbar.js"></script>
+<script src="/js/slider.js"></script>
+<script src="/js/timepicker.js"></script>
+<script src="/js/wow.min.js"></script>
+<!-- Custom script for all pages -->
+<script src="/js/script.js"></script>
+</body>
+</html>

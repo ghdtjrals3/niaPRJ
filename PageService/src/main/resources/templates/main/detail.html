@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="airbnb, booking, city guide, directory, events, hotel booking, listings, marketing, places, restaurant, restaurant">
+    <meta name="description" content="Guido - Directory & Listing HTML Template">
+    <meta name="CreativeLayers" content="ATFN">
+    <!-- css file -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <!-- Title -->
+    <title>Guido - Directory & Listing HTML Template</title>
+    <!-- Favicon -->
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon" type="image/x-icon"/>
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon"/>
+
+    <style>
+        body{
+            overflow-x:hidden; overflow-y:auto;
+        }
+    </style>
+
+<body>
+
+<div class="wrapper">
+    <div class="preloader"></div>
+
+    <!-- Main Header Nav -->
+    <header class="header-nav menu_style_home_one style2 navbar-scrolltofixed stricky main-menu">
+        <div class="container-fluid p0">
+            <!-- Ace Responsive Menu -->
+            <nav>
+                <!-- Menu Toggle btn-->
+                <div class="menu-toggle">
+                    <img class="nav_logo_img img-fluid" src="images/header-logo.svg" alt="header-logo.svg">
+                    <button type="button" id="menu-btn">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <a href="/covid/index" class="navbar_brand float-left dn-smd">
+                    <strong><h3 style="font-size: 60px; color:#3e4c66; font-weight: bold;">질병 지키미</h3></strong>
+                </a>
+                <!-- Responsive Menu Structure-->
+                <!--Note: declare the Menu style in the data-menu-style="horizontal" (options: horizontal, vertical, accordion) -->
+                <div class="ht_left_widget float-left">
+                    <ul>
+                        <li class="list-inline-item">
+                            <div class="ht_search_widget">
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="padding-right: 5%;">
+                    <ul id="respMenu" class="ace-responsive-menu text-right" data-menu-style="horizontal">
+                        <li>
+                            <a href="/covid/list1"><span class="title">감염병 발생정보</span></a>
+                            <!-- Level Two-->
+                            <ul>
+                                <li><a href="/covid/list1">감염병 제1군</a></li>
+                                <li><a href="/covid/list2">감염병 제4군</a></li>
+                            </ul>
+                        </li>
+                        &nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="http://3.39.252.243:11000/news/twonewslist"><span class="title">예방생활 수칙</span></a>
+                            <ul>
+                                <li><a href="http://3.39.252.243:11000/photo/uploadImgycle">분리배출 방법</a></li>
+                                <li><a href="http://3.39.252.243:11000/news/twonewslist">환경 뉴스</a></li>
+
+
+                            </ul>
+                            <!-- Level Two-->
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="/covid/hospital"><span class="title">병원</span></a>
+                            <!-- Level Two-->
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="/covid/publichospital"><span class="title">보건소</span></a>
+                            <!-- Level Two-->
+
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+
+                        <li class="list-inline-item list_s">
+                            <a href="/covid/RegForm" class="btn flaticon-avatar">
+                                <span class="dn-1200" style="color: red;"><strong>감염병 신고</strong></span></a></li>
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- Modal -->
+    <div class="sign_up_modal modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md mt100" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Main Header Nav For Mobile -->
+<div id="page" class="stylehome1 h0">
+    <div class="mobile-menu">
+        <div class="header stylehome1">
+            <div class="main_logo_home2 text-left">
+                <img class="nav_logo_img img-fluid mt15" src="images/header-logo2.svg" alt="header-logo2.svg">
+
+            </div>
+            <ul class="menu_bar_home2">
+                <li class="list-inline-item"><a class="custom_search_with_menu_trigger msearch_icon" href="#" data-toggle="modal" data-target="#staticBackdrop"><span class="flaticon-loupe"></span></a></li>
+                <li class="list-inline-item"><a class="muser_icon" href="page-register.html"><span class="flaticon-avatar"></span></a></li>
+                <li class="list-inline-item"><a class="menubar" href="#menu"><span></span></a></li>
+            </ul>
+        </div>
+    </div><!-- /.mobile-menu -->
+
+
+    <!-- Search Field Modal -->
+    <section class="modal fade search_dropdown" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="popup_modal_wrapper">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <a class="close closer" data-dismiss="modal" aria-label="Close" href="#"><span><img src="images/icons/close.svg" alt=""></span></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+    </section>
+
+    <!-- Listing Single v5 Home Area -->
+
+    <div class="banner-style-one owl-theme owl-carousel" style="background-color: #666666;";>
+
+        <div class="slide slide-one" ></div>
+        <div class="slide slide-one"> </div>
+    </div>
+
+
+    <!-- /.carousel-btn-block banner-carousel-btn -->
+</div><!-- /.main-banner-wrapper -->
+</div>
+</div>
+</div>
+<div class="container">
+    <div class="row listing_single_row style2">
+        <div class="col-lg-8 col-xl-7">
+            <div class="single_property_title listing_single_v1">
+                <div class="media">
+                    <div class="media-body mt20">
+                        <h2 class="mt-0" style="font-weight: bold; font-size: 45px">지혜 보건소<!--보건소 이름 --></h2>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xl-5">
+            <div class="single_property_social_share listing_single_v1 mt80 mt0-lg">
+                <div class="spss style2 listing_single_v1 mt30 float-left fn-lg">
+                    <ul class="mb0">
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<br><br><br>
+<!-- Listing Single V1 -->
+<section class="our-agent-single pb30-991">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-8" style="margin-right: 30px;">
+                <div class="row">
+                    <div class="col-lg-12 pl0 pr0 pl15-767 pr15-767">
+
+
+                        <div class="listing_single_sidebar" >
+                            <div class="lss_contact_location" style="" >
+                                <h3 class="mb25" style="color: #355e3b; font-weight: bold">보건소 정보 🏠</h3>
+
+                                <ul class="contact_list list-unstyled mb15">
+
+                                    <li><span class="flaticon-phone mr15"></span>000-000-0000<!--보건소 전화번호--></li>
+                                    <li><span class="flaticon-link mr15"></span><a target="_blank">서울특별시 송파구 송파대로567 511동<!--보건소 주소 --></a></li>
+                                </ul>
+
+                            </div>
+
+
+                            <br><br><br>
+                        </div>
+
+
+                    </div>
+
+                    <br><br><br>
+                    <div class="col-lg-12 pl0 pr0 pl15-767 pr15-767">
+                        <div class="listing_single_description mb60">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 pl0 pl15-767">
+                        <div class="single_page_review_form p30-lg mb30-991">
+                            <div class="wrapper">
+                                <div class="map" id ="map" style="width: 660px;height: 548px;"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+</section>
+
+<!-- Feature Properties -->
+
+<!-- Our Footer -->
+<section class="footer_one home1">
+    <div class="container pb70">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                <div class="footer_contact_widget">
+                    <h4>Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-white df"><span class="flaticon-pin mr15"></span><a href="#">서울특별시 강서구 화곡동 우장산로10길 112</a></li>
+                        <li class="text-white"><span class="flaticon-phone mr15"></span><a href="#">82+ 010-9962-6997</a></li>
+                        <li class="text-white"><span class="flaticon-email mr15"></span><a href="#">lowell0322@naver.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+            <div class="container pt20 pb30">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <div class="copyright-widget mt10 mb15-767">
+                            <p>© 질병지키미</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="footer_logo_widget text-center mb15-767">
+                            <div class="wrapper">
+                                <div class="logo text-center">
+
+                                    <span class="logo_title text-white pl15">질병지키미</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</section>
+<a class="scrollToHome" href="#"><i class="fa fa-angle-up"></i></a>
+</div>
+<!-- Wrapper End -->
+<script src="/js/jquery-3.6.0.js"></script>
+<script src="/js/jquery-migrate-3.0.0.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.mmenu.all.js"></script>
+<script src="/js/ace-responsive-menu.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/isotop.js"></script>
+<script src="/js/snackbar.min.js"></script>
+<script src="/js/simplebar.js"></script>
+<script src="/js/parallax.js"></script>
+<script src="/js/scrollto.js"></script>
+<script src="/js/jquery-scrolltofixed-min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/progressbar.js"></script>
+<script src="/js/slider.js"></script>
+<script src="/js/timepicker.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM&callback=initMap"></script>
+<script src="/js/googlemaps1.js"></script>
+<!-- Custom script for all pages -->
+<script src="/js/script.js"></script>
+</body>
+<script type="text/javascript">
+    function getNo2Ift() {
+        var year = document.getElementById("year").value;
+        var dsvd = document.getElementById("dsvd").value;
+
+        console.log(year);
+        console.log(dsvd);
+
+        var param = {
+            year : year,
+            dsvd : dsvd
+        };
+
+        $.ajax({
+            type : 'POST',
+            url : '/covid/getNo4Ift',
+            data : JSON.stringify(param),
+            dataType : 'json',
+            contentType : 'application/json',
+            success(result) {
+                if(result.length===0) {
+                    document.getElementById("pstOcnm").innerHTML = 0;
+                    document.getElementById("pstOcrt").innerHTML = '0%';
+                    document.getElementById("pstNmdth").innerHTML = 0  + "명";
+                    document.getElementById("ylfvOcnm").innerHTML = 0;
+                    document.getElementById("ylfvOcrt").innerHTML = '0%';
+                    document.getElementById("ylfvNmdth").innerHTML = 0  + "명";
+                    document.getElementById("dgfvrOcnm").innerHTML = 0;
+                    document.getElementById("dgfvrOcrt").innerHTML = '0%';
+                    document.getElementById("dgfvrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("vrhfvOcnm").innerHTML = 0;
+                    document.getElementById("vrhfvOcrt").innerHTML = '0%';
+                    document.getElementById("vrhfvNmdth").innerHTML = 0  + "명";
+                    document.getElementById("pckOcnm").innerHTML = 0;
+                    document.getElementById("pckOcrt").innerHTML = '0%';
+                    document.getElementById("pckNmdth").innerHTML = 0  + "명";
+                    document.getElementById("btntxOcnm").innerHTML = 0;
+                    document.getElementById("btntxOcrt").innerHTML = '0%';
+                    document.getElementById("btntxNmdth").innerHTML = 0  + "명";
+                    document.getElementById("srptsOcnm").innerHTML = 0;
+                    document.getElementById("srptsOcrt").innerHTML = '0%';
+                    document.getElementById("srptsNmdth").innerHTML = 0  + "명";
+                    document.getElementById("amifhOcnm").innerHTML = 0;
+                    document.getElementById("amifhOcrt").innerHTML = '0%';
+                    document.getElementById("amifhNmdth").innerHTML = 0  + "명";
+                    document.getElementById("swiflOcnm").innerHTML = 0;
+                    document.getElementById("swiflOcrt").innerHTML = '0%';
+                    document.getElementById("swiflNmdth").innerHTML = 0  + "명";
+                    document.getElementById("tlrmOcnm").innerHTML = 0;
+                    document.getElementById("tlrmOcrt").innerHTML = '0%';
+                    document.getElementById("tlrmNmdth").innerHTML = 0  + "명";
+                    document.getElementById("queOcnm").innerHTML = 0;
+                    document.getElementById("queOcrt").innerHTML = '0%';
+                    document.getElementById("queNmdth").innerHTML = 0  + "명";
+                    document.getElementById("wsnfvOcnm").innerHTML = 0;
+                    document.getElementById("wsnfvOcrt").innerHTML = '0%';
+                    document.getElementById("wsnfvNmdth").innerHTML = 0  + "명";
+                    document.getElementById("nwifOcnm").innerHTML = 0;
+                    document.getElementById("nwifOcrt").innerHTML = '0%';
+                    document.getElementById("nwifNmdth").innerHTML = 0  + "명";
+                    document.getElementById("lydsOcnm").innerHTML = 0;
+                    document.getElementById("lydsOcrt").innerHTML = '0%';
+                    document.getElementById("lydsNmdth").innerHTML = 0  + "명";
+                    document.getElementById("tbepOcnm").innerHTML = 0;
+                    document.getElementById("tbepOcrt").innerHTML = '0%';
+                    document.getElementById("tbepNmdth").innerHTML = 0  + "명";
+                    document.getElementById("ubrOcnm").innerHTML = 0;
+                    document.getElementById("ubrOcrt").innerHTML = '0%';
+                    document.getElementById("ubrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("chfvrOcnm").innerHTML = 0;
+                    document.getElementById("chfvrOcrt").innerHTML = '0%';
+                    document.getElementById("chfvrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("sfvtsOcnm").innerHTML = 0;
+                    document.getElementById("sfvtsOcrt").innerHTML = '0%';
+                    document.getElementById("sfvtsNmdth").innerHTML = 0  + "명";
+                    document.getElementById("mdrsdOcnm").innerHTML = 0;
+                    document.getElementById("mdrsdOcrt").innerHTML = '0%';
+                    document.getElementById("mdrsdNmdth").innerHTML = 0  + "명";
+                    document.getElementById("zkvfOcnm").innerHTML = 0;
+                    document.getElementById("zkvfOcrt").innerHTML = '0%';
+                    document.getElementById("zkvfNmdth").innerHTML = 0  + "명";
+
+                } else {
+                    document.getElementById("pstOcnm").innerHTML = result[0].pstOcnm;
+                    document.getElementById("pstOcrt").innerHTML = result[0].pstOcrt + '%';
+                    document.getElementById("pstNmdth").innerHTML = result[0].pstNmdth + "명";
+                    document.getElementById("ylfvOcnm").innerHTML = result[0].ylfvOcnm;
+                    document.getElementById("ylfvOcrt").innerHTML = result[0].ylfvOcrt + '%';
+                    document.getElementById("ylfvNmdth").innerHTML = result[0].ylfvNmdth + "명";
+                    document.getElementById("dgfvrOcnm").innerHTML = result[0].dgfvrOcnm;
+                    document.getElementById("dgfvrOcrt").innerHTML = result[0].dgfvrOcrt + '%';
+                    document.getElementById("dgfvrNmdth").innerHTML = result[0].dgfvrNmdth + "명";
+                    document.getElementById("vrhfvOcnm").innerHTML = result[0].vrhfvOcnm;
+                    document.getElementById("vrhfvOcrt").innerHTML = result[0].vrhfvOcrt + '%';
+                    document.getElementById("vrhfvNmdth").innerHTML = result[0].vrhfvNmdth + "명";
+                    document.getElementById("pckOcnm").innerHTML = result[0].pckOcnm;
+                    document.getElementById("pckOcrt").innerHTML = result[0].pckOcrt + '%';
+                    document.getElementById("pckNmdth").innerHTML = result[0].pckNmdth + "명";
+                    document.getElementById("btntxOcnm").innerHTML = result[0].btntxOcnm;
+                    document.getElementById("btntxOcrt").innerHTML = result[0].btntxOcrt + '%';
+                    document.getElementById("btntxNmdth").innerHTML = result[0].btntxNmdth + "명";
+                    document.getElementById("srptsOcnm").innerHTML = result[0].srptsOcnm;
+                    document.getElementById("srptsOcrt").innerHTML = result[0].srptsOcrt + '%';
+                    document.getElementById("srptsNmdth").innerHTML = result[0].srptsNmdth + "명";
+                    document.getElementById("amifhOcnm").innerHTML = result[0].amifhOcnm;
+                    document.getElementById("amifhOcrt").innerHTML = result[0].amifhOcrt + '%';
+                    document.getElementById("amifhNmdth").innerHTML = result[0].amifhNmdth + "명";
+                    document.getElementById("swiflOcnm").innerHTML = result[0].swiflOcnm;
+                    document.getElementById("swiflOcrt").innerHTML = result[0].swiflOcrt + '%';
+                    document.getElementById("swiflNmdth").innerHTML = result[0].swiflNmdth + "명";
+                    document.getElementById("tlrmOcnm").innerHTML = result[0].tlrmOcnm;
+                    document.getElementById("tlrmOcrt").innerHTML = result[0].tlrmOcrt + '%';
+                    document.getElementById("tlrmNmdth").innerHTML = result[0].tlrmNmdth + "명";
+                    document.getElementById("queOcnm").innerHTML = result[0].queOcnm;
+                    document.getElementById("queOcrt").innerHTML = result[0].queOcrt + '%';
+                    document.getElementById("queNmdth").innerHTML = result[0].queNmdth + "명";
+                    document.getElementById("wsnfvOcnm").innerHTML = result[0].wsnfvOcnm;
+                    document.getElementById("wsnfvOcrt").innerHTML = result[0].wsnfvOcrt + '%';
+                    document.getElementById("wsnfvNmdth").innerHTML = result[0].wsnfvNmdth + "명";
+                    document.getElementById("nwifOcnm").innerHTML = result[0].nwifOcnm;
+                    document.getElementById("nwifOcrt").innerHTML = result[0].nwifOcrt + '%';
+                    document.getElementById("nwifNmdth").innerHTML = result[0].nwifNmdth + "명";
+                    document.getElementById("lydsOcnm").innerHTML = result[0].lydsOcnm;
+                    document.getElementById("lydsOcrt").innerHTML = result[0].lydsOcrt + '%';
+                    document.getElementById("lydsNmdth").innerHTML = result[0].lydsNmdth + "명";
+                    document.getElementById("tbepOcnm").innerHTML = result[0].tbepOcnm;
+                    document.getElementById("tbepOcrt").innerHTML = result[0].tbepOcrt + '%';
+                    document.getElementById("tbepNmdth").innerHTML = result[0].tbepNmdth + "명";
+                    document.getElementById("ubrOcnm").innerHTML = result[0].ubrOcnm;
+                    document.getElementById("ubrOcrt").innerHTML = result[0].ubrOcrt + '%';
+                    document.getElementById("ubrNmdth").innerHTML = result[0].ubrNmdth + "명";
+                    document.getElementById("chfvrOcnm").innerHTML = result[0].chfvrOcnm;
+                    document.getElementById("chfvrOcrt").innerHTML = result[0].chfvrOcrt + '%';
+                    document.getElementById("chfvrNmdth").innerHTML = result[0].chfvrNmdth + "명";
+                    document.getElementById("sfvtsOcnm").innerHTML = result[0].sfvtsOcnm;
+                    document.getElementById("sfvtsOcrt").innerHTML = result[0].sfvtsOcrt + '%';
+                    document.getElementById("sfvtsNmdth").innerHTML = result[0].sfvtsNmdth + "명";
+                    document.getElementById("mdrsdOcnm").innerHTML = result[0].mdrsdOcnm;
+                    document.getElementById("mdrsdOcrt").innerHTML = result[0].mdrsdOcrt + '%';
+                    document.getElementById("mdrsdNmdth").innerHTML = result[0].mdrsdNmdth + "명";
+                    document.getElementById("zkvfOcnm").innerHTML = result[0].zkvfOcnm;
+                    document.getElementById("zkvfOcrt").innerHTML = result[0].zkvfOcrt + '%';
+                    document.getElementById("zkvfNmdth").innerHTML = result[0].zkvfNmdth + "명";
+                }
+                console.log(result);
+            },
+            error(e) {
+                console.log(e);
+            }
+        });
+    }
+</script>
+</html>

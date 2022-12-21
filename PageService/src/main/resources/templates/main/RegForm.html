@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+          content="airbnb, booking, city guide, directory, events, hotel booking, listings, marketing, places, restaurant, restaurant">
+    <meta name="description" content="Guido - Directory & Listing HTML Template">
+    <meta name="CreativeLayers" content="ATFN">
+    <!-- css file -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    <!-- Title -->
+    <title>Guido - Directory & Listing HTML Template</title>
+    <!-- Favicon -->
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon" type="image/x-icon"/>
+    <link href="/images/favicon.ico" sizes="128x128" rel="shortcut icon"/>
+
+    <script type ="text/javascript">
+
+        function kakaoPost(f) {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    let address = data.address;
+                    let zonecode = data.zonecode;
+                    f.addr1.value = "(" + zonecode + ")" + address
+                }
+            }).open();
+        }
+
+        <!-- 사용자 입력 확인 -->
+        function Checkfield(f) {
+            if (f.marketId.value == "") {
+                alert("아이디를 입력하세요");
+                f.marketId.focus();
+                return false;
+            }
+            if (f.marketName.value == "") {
+                alert("마켓이름을 입력하세요");
+                f.marketName.focus();
+                return false;
+            }
+            if (f.password.value == "") {
+                alert("비밀번호를 입력하세요");
+                f.password.focus();
+                return false;
+            }
+            if (f.password2.value == "") {
+                alert("비밀번호 확인을 입력하세요");
+                f.password2.focus();
+                return false;
+            }
+            if (f.password.value != f.password2.value) {
+                alert("비밀번호가 다릅니다 다시 입력하세요");
+                f.password.focus();
+                return false;
+            }
+            if (f.email.value == "") {
+                alert("이메일을 입력하세요");
+                f.email.focus();
+                return false;
+            }
+            if (f.addr1.value == "") {
+                alert("주소를 입력하세요");
+                f.addr1.focus();
+                return false;
+            }
+            if (f.addr2.value == "") {
+                alert("상세주소를 입력하세요");
+                f.addr2.focus();
+                return false;
+            }
+            if (f.marketNumber.value == "") {
+                alert("마켓 전화번호를 입력하세요");
+                f.marketNumber.focus();
+                return false;
+            }
+            if (f.marketSite.value == "") {
+                alert("마켓 사이트 주소를 입력하세요");
+                f.marketSite.focus();
+                return false;
+            }
+            if (f.marketContents.value == "") {
+                alert("마켓 소개글을 입력하세요");
+                f.marketContents.focus();
+                return false;
+            }
+        }
+
+    </script>
+
+    <!--이메일 인증 전송-->
+    <script>
+        //인증 메일 전송
+        function doSendmail() {
+            $.ajax({
+                url: "/market/sendmail",
+                type: "post",
+                data: $("#email"),
+                /*dataType이란 내가 반환받을 데이터의 형태를 명시해주는 것*/
+                dataType: 'json',
+                success(pMap) {
+                    let data = pMap["res"];
+                    randomPin = pMap["randomPin"];
+                    if (data == 1) {
+                        $("#sendemail_result").text("메일발송이 완료되었습니다.");
+                        $("#sendemail_result").css("color", "blue");
+                        $("#btn_reg").attr("type","submit");
+                    } else {
+                        $("#sendemail_result").text("이메일을 다시 입력해주세요");
+                        $("#sendemail_result").css("color", "red");
+                        $("#btn_reg").attr("type","button");
+                    }
+                    //인증번호 실시간 확인
+                    $("#auth_email").on("propertychange change keyup paste input", function () {
+                        console.log("인증번호 실시간 확인 코드 시작");
+                        if (randomPin == $("#auth_email").val()) { // //인증 키 값을 비교를 위해 텍스트인 풋과 벨류를 비교
+                            $("#auth_res").text("인증번호가 일치 합니다");
+                            $("#auth_res").css('color', 'blue');
+                            $("#btn_reg").attr("type", "submit");
+                        } else {
+                            $("#auth_res").text("인증번호를 다시 확인해 주세요");
+                            $("#auth_res").css('color', 'red');
+                            $("#btn_reg").attr("type", "button"); //attr. 해당 태그 속성을 바꿔줌
+                        }
+                    });
+                }
+            });
+        }
+
+    </script>
+
+    <script type="text/javascript">
+
+        /* 유저 유효성 검사 정규식 */
+        //아이디 정규식
+        let userIdT = /^[a-z0-9]{4,12}$/;
+        // 이름 정규식
+        let userNameT = /^[가-힣]{2,6}$/;
+        // 비밀번호 검사 정규식//
+        let userPwdT = /^[A-Za-z0-9]{4,12}$/;
+        // 이메일 검사 정규식
+        let userEmailT = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+
+        $(document).ready(function () {
+
+            $("#marketId").blur(function () {
+                if (!userIdT.test($("#marketId").val())) {
+                    console.log("false");
+                    $("#id_check").text("영문자와 숫자 4~12자 이내로 입력하세요");
+                    $("#id_check").css("color", "red");
+                } else {
+                    console.log("true");
+                    $("#id_check").text("");
+                }
+            });
+            $("#marketName").blur(function () {
+                if (!userNameT.test($("#marketName").val())) {
+                    console.log("false");
+                    $("#name_check").text("한글 2~6자 이내로 입력하세요");
+                    $("#name_check").css("color", "red");
+                } else {
+                    console.log("true");
+                    $("#name_check").text("");
+                }
+            });
+            $("#password").blur(function () {
+                if (!userPwdT.test($("#password").val())) {
+                    console.log("false");
+                    $("#pwd_check").text("영문자+숫자 포함 8~20자 이내로 입력하세요");
+                    $("#pwd_check").css("color", "red");
+                } else {
+                    console.log("true");
+                    $("#pwd_check").text("");
+                }
+            });
+
+
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        function pwdConfirm() {
+            /* 비밀번호, 비밀번호 확인 입력창에 입력된 값을 비교해서 같다면 비밀번호 일치, 그렇지 않으면 불일치 라는 텍스트 출력.*/
+            /* document : 현재 문서를 의미함. 작성되고 있는 문서를 뜻함. */
+            /* getElementByID('아이디') : 아이디에 적힌 값을 가진 id의 value를 get을 해서 password 변수 넣기 */
+            var password = document.getElementById('password');					//비밀번호
+            var password2 = document.getElementById('password2');	//비밀번호 확인 값
+            var msg = document.getElementById('pwd2_check');				//확인 메세지
+            var correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
+            var wrongColor = "#ff0000";	//틀렸을 때 출력되는 색깔
+
+            if (password.value == password2.value) {//password 변수의 값과 passwordConfirm 변수의 값과 동일하다.
+                msg.style.color = correctColor;/* span 태그의 ID(confirmMsg) 사용  */
+                msg.innerHTML = "비밀번호 일치";/* innerHTML : HTML 내부에 추가적인 내용을 넣을 때 사용하는 것. */
+            } else {
+                msg.style.color = wrongColor;
+                msg.innerHTML = "비밀번호 불일치";
+            }
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+<div class="wrapper">
+    <div class="preloader"></div>
+
+    <!-- Main Header Nav -->
+    <header class="header-nav menu_style_home_one style2 navbar-scrolltofixed stricky main-menu">
+        <div class="container-fluid p0">
+            <!-- Ace Responsive Menu -->
+            <nav>
+                <!-- Menu Toggle btn-->
+                <div class="menu-toggle">
+                    <img class="nav_logo_img img-fluid" src="images/header-logo.svg" alt="header-logo.svg">
+                    <button type="button" id="menu-btn">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <a href="/covid/index" class="navbar_brand float-left dn-smd">
+                    <strong><h3 style="font-size: 60px; color:#3e4c66; font-weight: bold;">질병 지키미</h3></strong>
+                </a>
+                <!-- Responsive Menu Structure-->
+                <!--Note: declare the Menu style in the data-menu-style="horizontal" (options: horizontal, vertical, accordion) -->
+                <div class="ht_left_widget float-left">
+                    <ul>
+                        <li class="list-inline-item">
+                            <div class="ht_search_widget">
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="padding-right: 5%;">
+                    <ul id="respMenu" class="ace-responsive-menu text-right" data-menu-style="horizontal">
+                        <li>
+                            <a href="/covid/list1"><span class="title">감염병 발생정보</span></a>
+                            <!-- Level Two-->
+                            <ul>
+                                <li><a href="/covid/list1">감염병 제1군</a></li>
+                                <li><a href="/covid/list2">감염병 제4군</a></li>
+                            </ul>
+                        </li>
+                        &nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="http://3.39.252.243:11000/news/twonewslist"><span class="title">예방생활 수칙</span></a>
+                            <ul>
+                                <li><a href="http://3.39.252.243:11000/photo/uploadImgycle">분리배출 방법</a></li>
+                                <li><a href="http://3.39.252.243:11000/news/twonewslist">환경 뉴스</a></li>
+
+
+                            </ul>
+                            <!-- Level Two-->
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="/covid/hospital"><span class="title">병원</span></a>
+                            <!-- Level Two-->
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+                            <a href="/covid/publichospital"><span class="title">보건소</span></a>
+                            <!-- Level Two-->
+
+                        </li>&nbsp;&nbsp;&nbsp;
+
+                        <li>
+
+                        <li class="list-inline-item list_s">
+                            <a href="/covid/RegForm" class="btn flaticon-avatar">
+                                <span class="dn-1200" style="color: red;"><strong>감염병 신고</strong></span></a></li>
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+</div>
+
+<!-- Inner Page Breadcrumb -->
+<section class="inner_page_breadcrumb">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6">
+                <div class="breadcrumb_content">
+                    <h2 class="breadcrumb_title">감염병 신고 </h2>
+                    <ol class="breadcrumb">
+
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our LogIn Register -->
+<section class="our-log-reg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 offset-lg-3">
+                <div class="sign_up_form inner_page">
+                    <ul class="nav nav-pills mb-4" id="pills-tab2" role="tablist">
+
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="pills-profile-tab2" data-toggle="pill" href="#pills-profile"
+                               role="tab" aria-controls="pills-profile" aria-selected="false"></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent2">
+                        <div class="tab-pane fade show active" id="pills-ome2" role="tabpanel"
+                             aria-labelledby="pills-home-tab2">
+                            <form  name="f" action="http://3.39.252.243:11000/auth/insertMarketInfo" onsubmit="return Checkfield(this);" method="post">
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="marketId" id="marketId"
+                                           placeholder="이름" >
+                                    <div id="id_check"></div>
+                                    <div id="id_result"></div>
+                                </div>
+
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="marketNumber" id="marketNumber"
+                                           placeholder="전화번호">
+                                </div>
+
+
+
+                                <div class="form-group input-group">
+                                    <input type="email" class="form-control" name="email" id="email"
+                                           placeholder="이메일">
+                                    <div id="email_check"></div>
+                                    <div id="email_result"></div>
+                                </div>
+                                <button type="button" onclick="doSendmail();" class="btn btn-log btn-block btn-thm">
+                                    인증번호 발송
+                                </button>
+                                <div id="sendemail_result"></div>
+                                <br/>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" id="auth_email" placeholder="인증번호">
+                                    <div id="auth_res" name="auth_res"></div>
+                                </div>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="addr1" id="addr1"
+                                           placeholder="우편번호" readonly>
+                                    <input type="button" value="우편번호 찾기" style="display:inline-block"
+                                           onclick="kakaoPost(this.form)"/>
+                                </div>
+                                <div class="form-group input-group" id="adrr1_check"></div>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="addr2" id="addr2"
+                                           placeholder="상세주소">
+                                </div><br><br><br>
+
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="marketName" id="marketName"
+                                           placeholder="마켓 이름">
+                                    <div id="name_check"></div>
+                                </div>
+
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="marketSite" id="marketSite"
+                                           placeholder="마켓 사이트주소">
+                                </div>
+                                <div class="form-group input-group">
+                                    <label for="marketContents">마켓 소개 </label>
+                                    <textarea name="marketContents"   class="form-control" id="marketContents"  style="width:700px;height:200px;"></textarea>
+
+                                </div>
+
+                                <div><input type="submit" value="회원가입" class="btn btn-log btn-block btn-thm"/></div>
+                            </form>
+                        </div>
+                        <%--                            <div class="tab-pane fade" id="pills-profile2" role="tabpanel"--%>
+                        <%--                                 aria-labelledby="pills-profile-tab2">--%>
+                        <%--                                <form action="#">--%>
+                        <%--                                    <div class="form-group input-group">--%>
+                            <%--                                        <input type="email" class="form-control" id="exampleInputEmail5"--%>
+                            <%--                                               placeholder="Email">--%>
+                            <%--                                    </div>--%>
+                        <%--                                    <div class="form-group input-group">--%>
+                            <%--                                        <input type="text" class="form-control" id="exampleInputName3"--%>
+                            <%--                                               placeholder="Username">--%>
+                            <%--                                    </div>--%>
+                        <%--                                    <div class="form-group input-group mb20">--%>
+                            <%--                                        <input type="password" class="form-control" id="exampleInputPassword5"--%>
+                            <%--                                               placeholder="Password">--%>
+                            <%--                                    </div>--%>
+                        <%--                                    <button type="submit" id=btn_reg class="btn btn-log btn-block btn-thm"--%>
+                            <%--                                            onclick="Checkfield(this.form)">회원가입--%>
+                            <%--                                    </button>--%>
+                        <%--                                    <hr>--%>
+                        <%--                                    <div class="row">--%>
+                            <%--                                        <div class="col-lg-6">--%>
+                                <%--                                            <button type="submit" class="btn btn-block btn-fb"><i--%>
+                                    <%--                                                    class="fa fa-facebook float-left mt5"></i> Log In via Facebook--%>
+                                    <%--                                            </button>--%>
+                                <%--                                        </div>--%>
+                            <%--                                        <div class="col-lg-6">--%>
+                                <%--                                            <button type="submit" class="btn btn-block btn-googl"><i--%>
+                                    <%--                                                    class="fa fa-google float-left mt5"></i> Log In via Google+--%>
+                                    <%--                                            </button>--%>
+                                <%--                                        </div>--%>
+                            <%--                                    </div>--%>
+                        <%--                                </form>--%>
+                        <%--                            </div>--%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Our Footer -->
+<section class="footer_one home1">
+    <div class="container pb70">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                <div class="footer_contact_widget">
+                    <h4>Contact Us</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-white df"><span class="flaticon-pin mr15"></span><a href="#">서울특별시 강서구 화곡동
+                            우장산로10길 112</a></li>
+                        <li class="text-white"><span class="flaticon-phone mr15"></span><a href="#">82+
+                            010-9962-6997</a></li>
+                        <li class="text-white"><span class="flaticon-email mr15"></span><a
+                                href="#">lowell0322@naver.com</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+            <div class="container pt20 pb30">
+                <div class="row">
+                    <div class="col-md-4 col-lg-4">
+                        <div class="copyright-widget mt10 mb15-767">
+                            <p>© 질병지키미</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4">
+                        <div class="footer_logo_widget text-center mb15-767">
+                            <div class="wrapper">
+                                <div class="logo text-center">
+
+                                    <span class="logo_title text-white pl15">질병지키미</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+</section>
+<a class="scrollToHome" href="#"><i class="fa fa-angle-up"></i></a>
+</div>
+<!-- Wrapper End -->
+<script src="/js/jquery-3.6.0.js"></script>
+<script src="/js/jquery-migrate-3.0.0.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.mmenu.all.js"></script>
+<script src="/js/ace-responsive-menu.js"></script>
+<script src="/js/bootstrap-select.min.js"></script>
+<script src="/js/isotop.js"></script>
+<script src="/js/snackbar.min.js"></script>
+<script src="/js/simplebar.js"></script>
+<script src="/js/parallax.js"></script>
+<script src="/js/scrollto.js"></script>
+<script src="/js/jquery-scrolltofixed-min.js"></script>
+<script src="/js/jquery.counterup.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="/js/progressbar.js"></script>
+<script src="/js/slider.js"></script>
+<script src="/js/timepicker.js"></script>
+<script src="/js/wow.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAz77U5XQuEME6TpftaMdX0bBelQxXRlM&callback=initMap"></script>
+<script src="/js/googlemaps1.js"></script>
+<!-- Custom script for all pages -->
+<script src="/js/script.js"></script>
+</body>
+<script type="text/javascript">
+    function getNo2Ift() {
+        var year = document.getElementById("year").value;
+        var dsvd = document.getElementById("dsvd").value;
+
+        console.log(year);
+        console.log(dsvd);
+
+        var param = {
+            year : year,
+            dsvd : dsvd
+        };
+
+        $.ajax({
+            type : 'POST',
+            url : '/covid/getNo4Ift',
+            data : JSON.stringify(param),
+            dataType : 'json',
+            contentType : 'application/json',
+            success(result) {
+                if(result.length===0) {
+                    document.getElementById("pstOcnm").innerHTML = 0;
+                    document.getElementById("pstOcrt").innerHTML = '0%';
+                    document.getElementById("pstNmdth").innerHTML = 0  + "명";
+                    document.getElementById("ylfvOcnm").innerHTML = 0;
+                    document.getElementById("ylfvOcrt").innerHTML = '0%';
+                    document.getElementById("ylfvNmdth").innerHTML = 0  + "명";
+                    document.getElementById("dgfvrOcnm").innerHTML = 0;
+                    document.getElementById("dgfvrOcrt").innerHTML = '0%';
+                    document.getElementById("dgfvrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("vrhfvOcnm").innerHTML = 0;
+                    document.getElementById("vrhfvOcrt").innerHTML = '0%';
+                    document.getElementById("vrhfvNmdth").innerHTML = 0  + "명";
+                    document.getElementById("pckOcnm").innerHTML = 0;
+                    document.getElementById("pckOcrt").innerHTML = '0%';
+                    document.getElementById("pckNmdth").innerHTML = 0  + "명";
+                    document.getElementById("btntxOcnm").innerHTML = 0;
+                    document.getElementById("btntxOcrt").innerHTML = '0%';
+                    document.getElementById("btntxNmdth").innerHTML = 0  + "명";
+                    document.getElementById("srptsOcnm").innerHTML = 0;
+                    document.getElementById("srptsOcrt").innerHTML = '0%';
+                    document.getElementById("srptsNmdth").innerHTML = 0  + "명";
+                    document.getElementById("amifhOcnm").innerHTML = 0;
+                    document.getElementById("amifhOcrt").innerHTML = '0%';
+                    document.getElementById("amifhNmdth").innerHTML = 0  + "명";
+                    document.getElementById("swiflOcnm").innerHTML = 0;
+                    document.getElementById("swiflOcrt").innerHTML = '0%';
+                    document.getElementById("swiflNmdth").innerHTML = 0  + "명";
+                    document.getElementById("tlrmOcnm").innerHTML = 0;
+                    document.getElementById("tlrmOcrt").innerHTML = '0%';
+                    document.getElementById("tlrmNmdth").innerHTML = 0  + "명";
+                    document.getElementById("queOcnm").innerHTML = 0;
+                    document.getElementById("queOcrt").innerHTML = '0%';
+                    document.getElementById("queNmdth").innerHTML = 0  + "명";
+                    document.getElementById("wsnfvOcnm").innerHTML = 0;
+                    document.getElementById("wsnfvOcrt").innerHTML = '0%';
+                    document.getElementById("wsnfvNmdth").innerHTML = 0  + "명";
+                    document.getElementById("nwifOcnm").innerHTML = 0;
+                    document.getElementById("nwifOcrt").innerHTML = '0%';
+                    document.getElementById("nwifNmdth").innerHTML = 0  + "명";
+                    document.getElementById("lydsOcnm").innerHTML = 0;
+                    document.getElementById("lydsOcrt").innerHTML = '0%';
+                    document.getElementById("lydsNmdth").innerHTML = 0  + "명";
+                    document.getElementById("tbepOcnm").innerHTML = 0;
+                    document.getElementById("tbepOcrt").innerHTML = '0%';
+                    document.getElementById("tbepNmdth").innerHTML = 0  + "명";
+                    document.getElementById("ubrOcnm").innerHTML = 0;
+                    document.getElementById("ubrOcrt").innerHTML = '0%';
+                    document.getElementById("ubrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("chfvrOcnm").innerHTML = 0;
+                    document.getElementById("chfvrOcrt").innerHTML = '0%';
+                    document.getElementById("chfvrNmdth").innerHTML = 0  + "명";
+                    document.getElementById("sfvtsOcnm").innerHTML = 0;
+                    document.getElementById("sfvtsOcrt").innerHTML = '0%';
+                    document.getElementById("sfvtsNmdth").innerHTML = 0  + "명";
+                    document.getElementById("mdrsdOcnm").innerHTML = 0;
+                    document.getElementById("mdrsdOcrt").innerHTML = '0%';
+                    document.getElementById("mdrsdNmdth").innerHTML = 0  + "명";
+                    document.getElementById("zkvfOcnm").innerHTML = 0;
+                    document.getElementById("zkvfOcrt").innerHTML = '0%';
+                    document.getElementById("zkvfNmdth").innerHTML = 0  + "명";
+
+                } else {
+                    document.getElementById("pstOcnm").innerHTML = result[0].pstOcnm;
+                    document.getElementById("pstOcrt").innerHTML = result[0].pstOcrt + '%';
+                    document.getElementById("pstNmdth").innerHTML = result[0].pstNmdth + "명";
+                    document.getElementById("ylfvOcnm").innerHTML = result[0].ylfvOcnm;
+                    document.getElementById("ylfvOcrt").innerHTML = result[0].ylfvOcrt + '%';
+                    document.getElementById("ylfvNmdth").innerHTML = result[0].ylfvNmdth + "명";
+                    document.getElementById("dgfvrOcnm").innerHTML = result[0].dgfvrOcnm;
+                    document.getElementById("dgfvrOcrt").innerHTML = result[0].dgfvrOcrt + '%';
+                    document.getElementById("dgfvrNmdth").innerHTML = result[0].dgfvrNmdth + "명";
+                    document.getElementById("vrhfvOcnm").innerHTML = result[0].vrhfvOcnm;
+                    document.getElementById("vrhfvOcrt").innerHTML = result[0].vrhfvOcrt + '%';
+                    document.getElementById("vrhfvNmdth").innerHTML = result[0].vrhfvNmdth + "명";
+                    document.getElementById("pckOcnm").innerHTML = result[0].pckOcnm;
+                    document.getElementById("pckOcrt").innerHTML = result[0].pckOcrt + '%';
+                    document.getElementById("pckNmdth").innerHTML = result[0].pckNmdth + "명";
+                    document.getElementById("btntxOcnm").innerHTML = result[0].btntxOcnm;
+                    document.getElementById("btntxOcrt").innerHTML = result[0].btntxOcrt + '%';
+                    document.getElementById("btntxNmdth").innerHTML = result[0].btntxNmdth + "명";
+                    document.getElementById("srptsOcnm").innerHTML = result[0].srptsOcnm;
+                    document.getElementById("srptsOcrt").innerHTML = result[0].srptsOcrt + '%';
+                    document.getElementById("srptsNmdth").innerHTML = result[0].srptsNmdth + "명";
+                    document.getElementById("amifhOcnm").innerHTML = result[0].amifhOcnm;
+                    document.getElementById("amifhOcrt").innerHTML = result[0].amifhOcrt + '%';
+                    document.getElementById("amifhNmdth").innerHTML = result[0].amifhNmdth + "명";
+                    document.getElementById("swiflOcnm").innerHTML = result[0].swiflOcnm;
+                    document.getElementById("swiflOcrt").innerHTML = result[0].swiflOcrt + '%';
+                    document.getElementById("swiflNmdth").innerHTML = result[0].swiflNmdth + "명";
+                    document.getElementById("tlrmOcnm").innerHTML = result[0].tlrmOcnm;
+                    document.getElementById("tlrmOcrt").innerHTML = result[0].tlrmOcrt + '%';
+                    document.getElementById("tlrmNmdth").innerHTML = result[0].tlrmNmdth + "명";
+                    document.getElementById("queOcnm").innerHTML = result[0].queOcnm;
+                    document.getElementById("queOcrt").innerHTML = result[0].queOcrt + '%';
+                    document.getElementById("queNmdth").innerHTML = result[0].queNmdth + "명";
+                    document.getElementById("wsnfvOcnm").innerHTML = result[0].wsnfvOcnm;
+                    document.getElementById("wsnfvOcrt").innerHTML = result[0].wsnfvOcrt + '%';
+                    document.getElementById("wsnfvNmdth").innerHTML = result[0].wsnfvNmdth + "명";
+                    document.getElementById("nwifOcnm").innerHTML = result[0].nwifOcnm;
+                    document.getElementById("nwifOcrt").innerHTML = result[0].nwifOcrt + '%';
+                    document.getElementById("nwifNmdth").innerHTML = result[0].nwifNmdth + "명";
+                    document.getElementById("lydsOcnm").innerHTML = result[0].lydsOcnm;
+                    document.getElementById("lydsOcrt").innerHTML = result[0].lydsOcrt + '%';
+                    document.getElementById("lydsNmdth").innerHTML = result[0].lydsNmdth + "명";
+                    document.getElementById("tbepOcnm").innerHTML = result[0].tbepOcnm;
+                    document.getElementById("tbepOcrt").innerHTML = result[0].tbepOcrt + '%';
+                    document.getElementById("tbepNmdth").innerHTML = result[0].tbepNmdth + "명";
+                    document.getElementById("ubrOcnm").innerHTML = result[0].ubrOcnm;
+                    document.getElementById("ubrOcrt").innerHTML = result[0].ubrOcrt + '%';
+                    document.getElementById("ubrNmdth").innerHTML = result[0].ubrNmdth + "명";
+                    document.getElementById("chfvrOcnm").innerHTML = result[0].chfvrOcnm;
+                    document.getElementById("chfvrOcrt").innerHTML = result[0].chfvrOcrt + '%';
+                    document.getElementById("chfvrNmdth").innerHTML = result[0].chfvrNmdth + "명";
+                    document.getElementById("sfvtsOcnm").innerHTML = result[0].sfvtsOcnm;
+                    document.getElementById("sfvtsOcrt").innerHTML = result[0].sfvtsOcrt + '%';
+                    document.getElementById("sfvtsNmdth").innerHTML = result[0].sfvtsNmdth + "명";
+                    document.getElementById("mdrsdOcnm").innerHTML = result[0].mdrsdOcnm;
+                    document.getElementById("mdrsdOcrt").innerHTML = result[0].mdrsdOcrt + '%';
+                    document.getElementById("mdrsdNmdth").innerHTML = result[0].mdrsdNmdth + "명";
+                    document.getElementById("zkvfOcnm").innerHTML = result[0].zkvfOcnm;
+                    document.getElementById("zkvfOcrt").innerHTML = result[0].zkvfOcrt + '%';
+                    document.getElementById("zkvfNmdth").innerHTML = result[0].zkvfNmdth + "명";
+                }
+                console.log(result);
+            },
+            error(e) {
+                console.log(e);
+            }
+        });
+    }
+</script>
+</html>
