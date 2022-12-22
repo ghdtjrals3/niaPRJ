@@ -32,36 +32,19 @@
 
         <!-- 사용자 입력 확인 -->
         function Checkfield(f) {
-            if (f.marketId.value == "") {
-                alert("아이디를 입력하세요");
-                f.marketId.focus();
+
+            if (f.name.value == "") {
+                alert("이름을 입력하세요");
+                f.name.focus();
                 return false;
             }
-            if (f.marketName.value == "") {
-                alert("마켓이름을 입력하세요");
-                f.marketName.focus();
+            if (f.number.value == "") {
+                alert("전화번호를 입력하세요");
+                f.number.focus();
                 return false;
             }
-            if (f.password.value == "") {
-                alert("비밀번호를 입력하세요");
-                f.password.focus();
-                return false;
-            }
-            if (f.password2.value == "") {
-                alert("비밀번호 확인을 입력하세요");
-                f.password2.focus();
-                return false;
-            }
-            if (f.password.value != f.password2.value) {
-                alert("비밀번호가 다릅니다 다시 입력하세요");
-                f.password.focus();
-                return false;
-            }
-            if (f.email.value == "") {
-                alert("이메일을 입력하세요");
-                f.email.focus();
-                return false;
-            }
+
+
             if (f.addr1.value == "") {
                 alert("주소를 입력하세요");
                 f.addr1.focus();
@@ -72,62 +55,7 @@
                 f.addr2.focus();
                 return false;
             }
-            if (f.marketNumber.value == "") {
-                alert("마켓 전화번호를 입력하세요");
-                f.marketNumber.focus();
-                return false;
-            }
-            if (f.marketSite.value == "") {
-                alert("마켓 사이트 주소를 입력하세요");
-                f.marketSite.focus();
-                return false;
-            }
-            if (f.marketContents.value == "") {
-                alert("마켓 소개글을 입력하세요");
-                f.marketContents.focus();
-                return false;
-            }
-        }
 
-    </script>
-
-    <!--이메일 인증 전송-->
-    <script>
-        //인증 메일 전송
-        function doSendmail() {
-            $.ajax({
-                url: "/market/sendmail",
-                type: "post",
-                data: $("#email"),
-                /*dataType이란 내가 반환받을 데이터의 형태를 명시해주는 것*/
-                dataType: 'json',
-                success(pMap) {
-                    let data = pMap["res"];
-                    randomPin = pMap["randomPin"];
-                    if (data == 1) {
-                        $("#sendemail_result").text("메일발송이 완료되었습니다.");
-                        $("#sendemail_result").css("color", "blue");
-                        $("#btn_reg").attr("type","submit");
-                    } else {
-                        $("#sendemail_result").text("이메일을 다시 입력해주세요");
-                        $("#sendemail_result").css("color", "red");
-                        $("#btn_reg").attr("type","button");
-                    }
-                    //인증번호 실시간 확인
-                    $("#auth_email").on("propertychange change keyup paste input", function () {
-                        console.log("인증번호 실시간 확인 코드 시작");
-                        if (randomPin == $("#auth_email").val()) { // //인증 키 값을 비교를 위해 텍스트인 풋과 벨류를 비교
-                            $("#auth_res").text("인증번호가 일치 합니다");
-                            $("#auth_res").css('color', 'blue');
-                            $("#btn_reg").attr("type", "submit");
-                        } else {
-                            $("#auth_res").text("인증번호를 다시 확인해 주세요");
-                            $("#auth_res").css('color', 'red');
-                            $("#btn_reg").attr("type", "button"); //attr. 해당 태그 속성을 바꿔줌
-                        }
-                    });
-                }
-            });
         }
 
     </script>
@@ -135,30 +63,15 @@
     <script type="text/javascript">
 
         /* 유저 유효성 검사 정규식 */
-        //아이디 정규식
-        let userIdT = /^[a-z0-9]{4,12}$/;
+
         // 이름 정규식
         let userNameT = /^[가-힣]{2,6}$/;
-        // 비밀번호 검사 정규식//
-        let userPwdT = /^[A-Za-z0-9]{4,12}$/;
-        // 이메일 검사 정규식
-        let userEmailT = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
 
 
         $(document).ready(function () {
 
-            $("#marketId").blur(function () {
-                if (!userIdT.test($("#marketId").val())) {
-                    console.log("false");
-                    $("#id_check").text("영문자와 숫자 4~12자 이내로 입력하세요");
-                    $("#id_check").css("color", "red");
-                } else {
-                    console.log("true");
-                    $("#id_check").text("");
-                }
-            });
-            $("#marketName").blur(function () {
-                if (!userNameT.test($("#marketName").val())) {
+            $("#name").blur(function () {
+                if (!userNameT.test($("#name").val())) {
                     console.log("false");
                     $("#name_check").text("한글 2~6자 이내로 입력하세요");
                     $("#name_check").css("color", "red");
@@ -167,43 +80,9 @@
                     $("#name_check").text("");
                 }
             });
-            $("#password").blur(function () {
-                if (!userPwdT.test($("#password").val())) {
-                    console.log("false");
-                    $("#pwd_check").text("영문자+숫자 포함 8~20자 이내로 입력하세요");
-                    $("#pwd_check").css("color", "red");
-                } else {
-                    console.log("true");
-                    $("#pwd_check").text("");
-                }
-            });
 
 
         });
-    </script>
-
-    <script type="text/javascript">
-
-        function pwdConfirm() {
-            /* 비밀번호, 비밀번호 확인 입력창에 입력된 값을 비교해서 같다면 비밀번호 일치, 그렇지 않으면 불일치 라는 텍스트 출력.*/
-            /* document : 현재 문서를 의미함. 작성되고 있는 문서를 뜻함. */
-            /* getElementByID('아이디') : 아이디에 적힌 값을 가진 id의 value를 get을 해서 password 변수 넣기 */
-            var password = document.getElementById('password');					//비밀번호
-            var password2 = document.getElementById('password2');	//비밀번호 확인 값
-            var msg = document.getElementById('pwd2_check');				//확인 메세지
-            var correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
-            var wrongColor = "#ff0000";	//틀렸을 때 출력되는 색깔
-
-            if (password.value == password2.value) {//password 변수의 값과 passwordConfirm 변수의 값과 동일하다.
-                msg.style.color = correctColor;/* span 태그의 ID(confirmMsg) 사용  */
-                msg.innerHTML = "비밀번호 일치";/* innerHTML : HTML 내부에 추가적인 내용을 넣을 때 사용하는 것. */
-            } else {
-                msg.style.color = wrongColor;
-                msg.innerHTML = "비밀번호 불일치";
-            }
-        }
-
-
     </script>
 
 
@@ -253,15 +132,15 @@
                         &nbsp;&nbsp;&nbsp;
 
                         <li>
-                            <a href="http://3.39.252.243:11000/news/twonewslist"><span class="title">예방생활 수칙</span></a>
+                            <a href="/covid/prevention1"><span class="title">예방생활 수칙</span></a>
                             <ul>
-                                <li><a href="http://3.39.252.243:11000/photo/uploadImgycle">분리배출 방법</a></li>
-                                <li><a href="http://3.39.252.243:11000/news/twonewslist">환경 뉴스</a></li>
+                                <li><a href="/covid/prevention1">신종인플루엔자 예방수칙</a></li>
+                                <li><a href="/covid/preventionQ">신종인플루엔자 Q & A</a></li>
 
 
                             </ul>
                             <!-- Level Two-->
-                        </li>&nbsp;&nbsp;&nbsp;
+                        </li>&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <li>
                             <a href="/covid/hospital"><span class="title">병원</span></a>
@@ -320,36 +199,43 @@
                     <div class="tab-content" id="pills-tabContent2">
                         <div class="tab-pane fade show active" id="pills-ome2" role="tabpanel"
                              aria-labelledby="pills-home-tab2">
-                            <form  name="f" action="http://3.39.252.243:11000/auth/insertMarketInfo" onsubmit="return Checkfield(this);" method="post">
+                            <form  name="f"  onsubmit="return Checkfield(this);" method="post">
+
+
+                                <h3 style="color: #0a0a0a;"><strong>인적사항</strong></h3>
+                                <!--이름입력-->
                                 <div class="form-group input-group">
-                                    <input type="text" class="form-control" name="marketId" id="marketId"
+                                    <input type="text" class="form-control" name="name" id="name"
                                            placeholder="이름" >
-                                    <div id="id_check"></div>
-                                    <div id="id_result"></div>
+                                    <div id="name_check"></div>
+                                    <div id="name_result"></div>
+                                </div>
+
+                                <!--주민등록번호-->
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="mainNumber" id="mainNumber"
+                                           placeholder="주민(외국인)등록번호">
                                 </div>
 
                                 <div class="form-group input-group">
-                                    <input type="text" class="form-control" name="marketNumber" id="marketNumber"
+                                    <input type="checkbox" name="sex" value="남자">남자
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="sex" value="여자">여자
+                                </div>
+
+                                <!--전화번호입력-->
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="number" id="number"
                                            placeholder="전화번호">
                                 </div>
 
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="job" id="job"
+                                           placeholder="직업">
+                                </div>
 
 
-                                <div class="form-group input-group">
-                                    <input type="email" class="form-control" name="email" id="email"
-                                           placeholder="이메일">
-                                    <div id="email_check"></div>
-                                    <div id="email_result"></div>
-                                </div>
-                                <button type="button" onclick="doSendmail();" class="btn btn-log btn-block btn-thm">
-                                    인증번호 발송
-                                </button>
-                                <div id="sendemail_result"></div>
-                                <br/>
-                                <div class="form-group input-group">
-                                    <input type="text" class="form-control" id="auth_email" placeholder="인증번호">
-                                    <div id="auth_res" name="auth_res"></div>
-                                </div>
+                                <!--주소입력-->
                                 <div class="form-group input-group">
                                     <input type="text" class="form-control" name="addr1" id="addr1"
                                            placeholder="우편번호" readonly>
@@ -357,69 +243,200 @@
                                            onclick="kakaoPost(this.form)"/>
                                 </div>
                                 <div class="form-group input-group" id="adrr1_check"></div>
+
+
                                 <div class="form-group input-group">
                                     <input type="text" class="form-control" name="addr2" id="addr2"
                                            placeholder="상세주소">
-                                </div><br><br><br>
+                                </div>
+                                <br><br><br>
+
+
+                                <h3 style="color: #0a0a0a;"><strong>감염병명</strong></h3>
+                                <!--진단명-->
+                                <div class="form-group input-group">
+
+                                    <li class="select-cnt">
+                                        <label >제1급</label>
+                                        <select class="w40" name="sick1">
+                                            <option value="에볼라바이러스병">에볼라바이러스병</option>
+                                            <option value="마버그열">마버그열</option>
+                                            <option value="라싸열">라싸열</option>
+                                            <option value="크리미안콩고출혈열">크리미안콩고출혈열</option>
+                                            <option value="남아메리카출혈열">남아메리카출혈열</option>
+                                            <option value="리프트밸리열">리프트밸리열</option>
+                                            <option value="두창">두창</option>
+                                            <option value="페스트">페스트</option>
+                                            <option value="탄저">탄저</option>
+                                            <option value="보툴리눔독소증">보툴리눔독소증</option>
+                                            <option value="야토병">야토병</option>
+                                            <option value="신종감염병증후근(특이사항작성)">신종감염병증후근(특이사항작성)</option>
+                                            <option value="중증급성호흡기증후군">중증급성호흡기증후군</option>
+                                            <option value="중동호흡기증후군">중동호흡기증후군</option>
+                                            <option value="동물인플루엔자 인체감염증">동물인플루엔자 인체감염증</option>
+                                            <option value="신종인플루엔자">신종인플루엔자</option>
+                                            <option value="디프테리아">디프테리아</option>
+                                            <option value="...." selected="selected">....</option>
+                                        </select>
+                                    </li>
+
+                                    <li class="select-cnt">
+                                        <label >제2급</label>
+                                        <select class="w40" name="sick2">
+                                            <option value="수두">수두</option>
+                                            <option value="홍역">홍역</option>
+                                            <option value="콜레라">콜레라</option>
+                                            <option value="장티푸스">장티푸스</option>
+                                            <option value="파라티푸스">파라티푸스</option>
+                                            <option value="세균성이질">세균성이질</option>
+                                            <option value="장출혈성대장균감염증">장출혈성대장균감염증</option>
+                                            <option value="A형간염">A형간염</option>
+                                            <option value="백일해">백일해</option>
+                                            <option value="유행성이하선염">유행성이하선염</option>
+                                            <option value="풍진">풍진</option>
+                                            <option value="폴리오">폴리오</option>
+                                            <option value="수막구균 감염증">수막구균 감염증</option>
+                                            <option value="b형헤모필루스인플루엔자">b형헤모필루스인플루엔자</option>
+                                            <option value="성홍열">성홍열</option>
+                                            <option value="반코마이신내성황색포도알균 감염증">반코마이신내성황색포도알균 감염증</option>
+                                            <option value="카바페넴내성장내세균속균종 감염증">카바페넴내성장내세균속균종 감염증</option>
+                                            <option value="E형간염">E형간염</option>
+                                            <option value="...." selected="selected">....</option>
+                                        </select>
+                                    </li>
+
+                                    <li class="select-cnt">
+                                        <label >제3급</label>
+                                        <select class="w40" name="sick3">
+                                            <option value="파상풍">파상풍</option>
+                                            <option value="B형간염">B형간염</option>
+                                            <option value="일본뇌염">일본뇌염</option>
+                                            <option value="C형간염">C형간염</option>
+                                            <option value="말라리아">말라리아</option>
+                                            <option value="레지오넬라증">레지오넬라증</option>
+                                            <option value="비브리오패혈증">비브리오패혈증</option>
+                                            <option value="발진티푸스">발진티푸스</option>
+                                            <option value="발진열">발진열</option>
+                                            <option value="쯔쯔가무시증">쯔쯔가무시증</option>
+                                            <option value="렙토스피라증">렙토스피라증</option>
+                                            <option value="브루셀라증">브루셀라증</option>
+                                            <option value="공수병">공수병 감염증</option>
+                                            <option value="신증후군출혈열">신증후군출혈열</option>
+                                            <option value="크로이츠펠트-야콥병">크로이츠펠트-야콥병</option>
+                                            <option value="황열">황열</option>
+                                            <option value="뎅기열">뎅기열</option>
+                                            <option value="큐열">큐열</option>
+                                            <option value="웨스트나일열">웨스트나일열</option>
+                                            <option value="라임병">라임병</option>
+                                            <option value="진드기매개뇌염">진드기매개뇌염</option>
+                                            <option value="유비저">유비저</option>
+                                            <option value="치쿤구니야열">치쿤구니야열</option>
+                                            <option value="중증열성혈소판감소증후군">중증열성혈소판감소증후군</option>
+                                            <option value="지카바이러스 감염증">지카바이러스 감염증</option>
+                                            <option value="...." selected="selected">....</option>
+                                        </select>
+                                    </li>
+                                </div>
+                                <br>
 
                                 <div class="form-group input-group">
-                                    <input type="text" class="form-control" name="marketName" id="marketName"
-                                           placeholder="마켓 이름">
-                                    <div id="name_check"></div>
+                                    <input type="text" class="form-control" name="sick" id="sick"
+                                           placeholder="특이사항(그 외)">
                                 </div>
+                                <br><br><br>
 
+                                <h3 style="color: #0a0a0a;"><strong>감염병 발생정보</strong></h3>
+
+                                <h5 style="color: #0a0a0a;">발병일</h5>
                                 <div class="form-group input-group">
-                                    <input type="text" class="form-control" name="marketSite" id="marketSite"
-                                           placeholder="마켓 사이트주소">
+                                    <input type="date"  max="2030-12-31" min="2000-01-01" value="2022-12-23" class="form-control" name="date" >
                                 </div>
+                                <br>
+
+                                <h5 style="color: #0a0a0a;">진단일</h5>
                                 <div class="form-group input-group">
-                                    <label for="marketContents">마켓 소개 </label>
-                                    <textarea name="marketContents"   class="form-control" id="marketContents"  style="width:700px;height:200px;"></textarea>
+                                    <input type="date"  max="2030-12-31" min="2000-01-01" value="2022-12-23" class="form-control" name="date" >
+                                </div>
+                                <br>
+
+                                <h5 style="color: #0a0a0a;">신고일</h5>
+                                <div class="form-group input-group">
+                                    <input type="date"  max="2030-12-31" min="2000-01-01" value="2022-12-23" class="form-control" name="date" >
+                                </div>
+                                <br>
+
+                                <h5 style="color: #0a0a0a;">확진검사 결과</h5>
+                                <div class="form-group input-group">
+                                    <input type="checkbox" name="result" value="양성">양성
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="result" value="음성">음성
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="result" value="검사 진행중">검사 진행중
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="result" value="검사 미실시">검사 미실시
+                                </div>
+                                <br>
+
+                                <h5 style="color: #0a0a0a;">입원여부</h5>
+                                <div class="form-group input-group">
+                                    <input type="checkbox" name="hospital" value="외래">외래
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="hospital" value="입원">입원
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="hospital" value="그 밖의 경우">그 밖의 경우
+                                </div>
+                                <br>
+
+                                <h5 style="color: #0a0a0a;">비고(특이사항)</h5>
+                                <div class="form-group input-group">
+                                    <input type="text" class="form-control" name="text_sick" id="text_sick"
+                                           placeholder="특이사항">
+                                </div>
+                                <br>
+
+                                <h5 style="color: #0a0a0a;">사망여부</h5>
+                                <div class="form-group input-group">
+                                    <input type="checkbox" name="dead" value="생존">생존
+                                    &nbsp;&nbsp;&nbsp;
+                                    <input type="checkbox" name="dead" value="사망">사망
 
                                 </div>
 
-                                <div><input type="submit" value="회원가입" class="btn btn-log btn-block btn-thm"/></div>
+                                <br><br><br>
+
+
+
+
+                                <h3 style="color: #0a0a0a;"><strong>신고방법</strong></h3>
+                                <div class="form-group input-group">
+                                    <p> 1. 제1급감염병의 경우에는 즉시 질병관리청장 또는 관할 보건소장에게 구두, 전화 등의 방법으로 알린 후 질병관리청장 또는 관할 보건소장에게 신고서를 제출해야 하고,
+                                        제2급감염병 및 제3급감염병의 경우에는 24시간 이내에 질병관리청장 또는 관할 보건소장에게 신고서를 제출해야합니다. 다만, 이미 신고한
+                                        감염병환자 중 확진검사결과 또는 환자 등 분류정보가 변경되거나 환자가 아닌 것으로 확인된 경우에는 반드시 그 결과를 변경하여 신고하거나 관할 보건소로
+                                        통보해야 합니다.</p><br>
+                                    <p> 2. 감염병에 따라 환자상태 및 감염병 원인 파악을 위한 추가정보를 요청할 수 있습니다. </p><br>
+                                    <p> 3. 감염병 발생을 신고하기 전에 환자가 사망한 경우에는 감염병 발생 신고서와 감염병환자등 사망 신고서를 모두 작성하여 신고해야 하며, 감염병 발생을 신고한 후에 환자가 사망한 경우에는 감염병환자등 사망 신고서만
+                                        작성하여 신고합니다.</p><br>
+                                    <p> 4. 제2급감염병 중 결핵은 [결행예방법]에서 정하는 방법에 따라, 제3급감염병 중 후천성면역결핍증은 [후천성면역결핍증 예방법]에서
+                                        정하는 방법에 따라 별도로 발생 및 사망을 신고합니다.</p><br>
+                                    <p> 5. 제4급감염병(표본감시대상감염병)이 발생한 경우에는 표본감시의료기관으로 지정된 보건의료기관이나 그 밖의 기관 또는 단체의 장이 질병관리본부장이 정하는
+                                        별도의 서식으로 7일 이내에 신고해야 합니다. </p><br>
+                                    <p> 6. 팩스 또는 정보시스템을 통해 신고합니다. </p><br>
+                                    <p> 7. 관할 의료기관 등으로부터 신고 받은 보건소에서는 환자의 주민등록주소지 관할 보건소로 이전 보고합니다. </p>
+                                </div>
+
+                                <div><input type="button" onclick="location.href='/covid/index'"; value="제출하기" class="btn btn-log btn-block btn-thm" style="background-color: #666666;"/></div>
                             </form>
                         </div>
-                        <%--                            <div class="tab-pane fade" id="pills-profile2" role="tabpanel"--%>
-                        <%--                                 aria-labelledby="pills-profile-tab2">--%>
-                        <%--                                <form action="#">--%>
-                        <%--                                    <div class="form-group input-group">--%>
-                            <%--                                        <input type="email" class="form-control" id="exampleInputEmail5"--%>
-                            <%--                                               placeholder="Email">--%>
-                            <%--                                    </div>--%>
-                        <%--                                    <div class="form-group input-group">--%>
-                            <%--                                        <input type="text" class="form-control" id="exampleInputName3"--%>
-                            <%--                                               placeholder="Username">--%>
-                            <%--                                    </div>--%>
-                        <%--                                    <div class="form-group input-group mb20">--%>
-                            <%--                                        <input type="password" class="form-control" id="exampleInputPassword5"--%>
-                            <%--                                               placeholder="Password">--%>
-                            <%--                                    </div>--%>
-                        <%--                                    <button type="submit" id=btn_reg class="btn btn-log btn-block btn-thm"--%>
-                            <%--                                            onclick="Checkfield(this.form)">회원가입--%>
-                            <%--                                    </button>--%>
-                        <%--                                    <hr>--%>
-                        <%--                                    <div class="row">--%>
-                            <%--                                        <div class="col-lg-6">--%>
-                                <%--                                            <button type="submit" class="btn btn-block btn-fb"><i--%>
-                                    <%--                                                    class="fa fa-facebook float-left mt5"></i> Log In via Facebook--%>
-                                    <%--                                            </button>--%>
-                                <%--                                        </div>--%>
-                            <%--                                        <div class="col-lg-6">--%>
-                                <%--                                            <button type="submit" class="btn btn-block btn-googl"><i--%>
-                                    <%--                                                    class="fa fa-google float-left mt5"></i> Log In via Google+--%>
-                                    <%--                                            </button>--%>
-                                <%--                                        </div>--%>
-                            <%--                                    </div>--%>
-                        <%--                                </form>--%>
-                        <%--                            </div>--%>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
 
 <!-- Our Footer -->
 <section class="footer_one home1">
@@ -488,156 +505,5 @@
 <!-- Custom script for all pages -->
 <script src="/js/script.js"></script>
 </body>
-<script type="text/javascript">
-    function getNo2Ift() {
-        var year = document.getElementById("year").value;
-        var dsvd = document.getElementById("dsvd").value;
 
-        console.log(year);
-        console.log(dsvd);
-
-        var param = {
-            year : year,
-            dsvd : dsvd
-        };
-
-        $.ajax({
-            type : 'POST',
-            url : '/covid/getNo4Ift',
-            data : JSON.stringify(param),
-            dataType : 'json',
-            contentType : 'application/json',
-            success(result) {
-                if(result.length===0) {
-                    document.getElementById("pstOcnm").innerHTML = 0;
-                    document.getElementById("pstOcrt").innerHTML = '0%';
-                    document.getElementById("pstNmdth").innerHTML = 0  + "명";
-                    document.getElementById("ylfvOcnm").innerHTML = 0;
-                    document.getElementById("ylfvOcrt").innerHTML = '0%';
-                    document.getElementById("ylfvNmdth").innerHTML = 0  + "명";
-                    document.getElementById("dgfvrOcnm").innerHTML = 0;
-                    document.getElementById("dgfvrOcrt").innerHTML = '0%';
-                    document.getElementById("dgfvrNmdth").innerHTML = 0  + "명";
-                    document.getElementById("vrhfvOcnm").innerHTML = 0;
-                    document.getElementById("vrhfvOcrt").innerHTML = '0%';
-                    document.getElementById("vrhfvNmdth").innerHTML = 0  + "명";
-                    document.getElementById("pckOcnm").innerHTML = 0;
-                    document.getElementById("pckOcrt").innerHTML = '0%';
-                    document.getElementById("pckNmdth").innerHTML = 0  + "명";
-                    document.getElementById("btntxOcnm").innerHTML = 0;
-                    document.getElementById("btntxOcrt").innerHTML = '0%';
-                    document.getElementById("btntxNmdth").innerHTML = 0  + "명";
-                    document.getElementById("srptsOcnm").innerHTML = 0;
-                    document.getElementById("srptsOcrt").innerHTML = '0%';
-                    document.getElementById("srptsNmdth").innerHTML = 0  + "명";
-                    document.getElementById("amifhOcnm").innerHTML = 0;
-                    document.getElementById("amifhOcrt").innerHTML = '0%';
-                    document.getElementById("amifhNmdth").innerHTML = 0  + "명";
-                    document.getElementById("swiflOcnm").innerHTML = 0;
-                    document.getElementById("swiflOcrt").innerHTML = '0%';
-                    document.getElementById("swiflNmdth").innerHTML = 0  + "명";
-                    document.getElementById("tlrmOcnm").innerHTML = 0;
-                    document.getElementById("tlrmOcrt").innerHTML = '0%';
-                    document.getElementById("tlrmNmdth").innerHTML = 0  + "명";
-                    document.getElementById("queOcnm").innerHTML = 0;
-                    document.getElementById("queOcrt").innerHTML = '0%';
-                    document.getElementById("queNmdth").innerHTML = 0  + "명";
-                    document.getElementById("wsnfvOcnm").innerHTML = 0;
-                    document.getElementById("wsnfvOcrt").innerHTML = '0%';
-                    document.getElementById("wsnfvNmdth").innerHTML = 0  + "명";
-                    document.getElementById("nwifOcnm").innerHTML = 0;
-                    document.getElementById("nwifOcrt").innerHTML = '0%';
-                    document.getElementById("nwifNmdth").innerHTML = 0  + "명";
-                    document.getElementById("lydsOcnm").innerHTML = 0;
-                    document.getElementById("lydsOcrt").innerHTML = '0%';
-                    document.getElementById("lydsNmdth").innerHTML = 0  + "명";
-                    document.getElementById("tbepOcnm").innerHTML = 0;
-                    document.getElementById("tbepOcrt").innerHTML = '0%';
-                    document.getElementById("tbepNmdth").innerHTML = 0  + "명";
-                    document.getElementById("ubrOcnm").innerHTML = 0;
-                    document.getElementById("ubrOcrt").innerHTML = '0%';
-                    document.getElementById("ubrNmdth").innerHTML = 0  + "명";
-                    document.getElementById("chfvrOcnm").innerHTML = 0;
-                    document.getElementById("chfvrOcrt").innerHTML = '0%';
-                    document.getElementById("chfvrNmdth").innerHTML = 0  + "명";
-                    document.getElementById("sfvtsOcnm").innerHTML = 0;
-                    document.getElementById("sfvtsOcrt").innerHTML = '0%';
-                    document.getElementById("sfvtsNmdth").innerHTML = 0  + "명";
-                    document.getElementById("mdrsdOcnm").innerHTML = 0;
-                    document.getElementById("mdrsdOcrt").innerHTML = '0%';
-                    document.getElementById("mdrsdNmdth").innerHTML = 0  + "명";
-                    document.getElementById("zkvfOcnm").innerHTML = 0;
-                    document.getElementById("zkvfOcrt").innerHTML = '0%';
-                    document.getElementById("zkvfNmdth").innerHTML = 0  + "명";
-
-                } else {
-                    document.getElementById("pstOcnm").innerHTML = result[0].pstOcnm;
-                    document.getElementById("pstOcrt").innerHTML = result[0].pstOcrt + '%';
-                    document.getElementById("pstNmdth").innerHTML = result[0].pstNmdth + "명";
-                    document.getElementById("ylfvOcnm").innerHTML = result[0].ylfvOcnm;
-                    document.getElementById("ylfvOcrt").innerHTML = result[0].ylfvOcrt + '%';
-                    document.getElementById("ylfvNmdth").innerHTML = result[0].ylfvNmdth + "명";
-                    document.getElementById("dgfvrOcnm").innerHTML = result[0].dgfvrOcnm;
-                    document.getElementById("dgfvrOcrt").innerHTML = result[0].dgfvrOcrt + '%';
-                    document.getElementById("dgfvrNmdth").innerHTML = result[0].dgfvrNmdth + "명";
-                    document.getElementById("vrhfvOcnm").innerHTML = result[0].vrhfvOcnm;
-                    document.getElementById("vrhfvOcrt").innerHTML = result[0].vrhfvOcrt + '%';
-                    document.getElementById("vrhfvNmdth").innerHTML = result[0].vrhfvNmdth + "명";
-                    document.getElementById("pckOcnm").innerHTML = result[0].pckOcnm;
-                    document.getElementById("pckOcrt").innerHTML = result[0].pckOcrt + '%';
-                    document.getElementById("pckNmdth").innerHTML = result[0].pckNmdth + "명";
-                    document.getElementById("btntxOcnm").innerHTML = result[0].btntxOcnm;
-                    document.getElementById("btntxOcrt").innerHTML = result[0].btntxOcrt + '%';
-                    document.getElementById("btntxNmdth").innerHTML = result[0].btntxNmdth + "명";
-                    document.getElementById("srptsOcnm").innerHTML = result[0].srptsOcnm;
-                    document.getElementById("srptsOcrt").innerHTML = result[0].srptsOcrt + '%';
-                    document.getElementById("srptsNmdth").innerHTML = result[0].srptsNmdth + "명";
-                    document.getElementById("amifhOcnm").innerHTML = result[0].amifhOcnm;
-                    document.getElementById("amifhOcrt").innerHTML = result[0].amifhOcrt + '%';
-                    document.getElementById("amifhNmdth").innerHTML = result[0].amifhNmdth + "명";
-                    document.getElementById("swiflOcnm").innerHTML = result[0].swiflOcnm;
-                    document.getElementById("swiflOcrt").innerHTML = result[0].swiflOcrt + '%';
-                    document.getElementById("swiflNmdth").innerHTML = result[0].swiflNmdth + "명";
-                    document.getElementById("tlrmOcnm").innerHTML = result[0].tlrmOcnm;
-                    document.getElementById("tlrmOcrt").innerHTML = result[0].tlrmOcrt + '%';
-                    document.getElementById("tlrmNmdth").innerHTML = result[0].tlrmNmdth + "명";
-                    document.getElementById("queOcnm").innerHTML = result[0].queOcnm;
-                    document.getElementById("queOcrt").innerHTML = result[0].queOcrt + '%';
-                    document.getElementById("queNmdth").innerHTML = result[0].queNmdth + "명";
-                    document.getElementById("wsnfvOcnm").innerHTML = result[0].wsnfvOcnm;
-                    document.getElementById("wsnfvOcrt").innerHTML = result[0].wsnfvOcrt + '%';
-                    document.getElementById("wsnfvNmdth").innerHTML = result[0].wsnfvNmdth + "명";
-                    document.getElementById("nwifOcnm").innerHTML = result[0].nwifOcnm;
-                    document.getElementById("nwifOcrt").innerHTML = result[0].nwifOcrt + '%';
-                    document.getElementById("nwifNmdth").innerHTML = result[0].nwifNmdth + "명";
-                    document.getElementById("lydsOcnm").innerHTML = result[0].lydsOcnm;
-                    document.getElementById("lydsOcrt").innerHTML = result[0].lydsOcrt + '%';
-                    document.getElementById("lydsNmdth").innerHTML = result[0].lydsNmdth + "명";
-                    document.getElementById("tbepOcnm").innerHTML = result[0].tbepOcnm;
-                    document.getElementById("tbepOcrt").innerHTML = result[0].tbepOcrt + '%';
-                    document.getElementById("tbepNmdth").innerHTML = result[0].tbepNmdth + "명";
-                    document.getElementById("ubrOcnm").innerHTML = result[0].ubrOcnm;
-                    document.getElementById("ubrOcrt").innerHTML = result[0].ubrOcrt + '%';
-                    document.getElementById("ubrNmdth").innerHTML = result[0].ubrNmdth + "명";
-                    document.getElementById("chfvrOcnm").innerHTML = result[0].chfvrOcnm;
-                    document.getElementById("chfvrOcrt").innerHTML = result[0].chfvrOcrt + '%';
-                    document.getElementById("chfvrNmdth").innerHTML = result[0].chfvrNmdth + "명";
-                    document.getElementById("sfvtsOcnm").innerHTML = result[0].sfvtsOcnm;
-                    document.getElementById("sfvtsOcrt").innerHTML = result[0].sfvtsOcrt + '%';
-                    document.getElementById("sfvtsNmdth").innerHTML = result[0].sfvtsNmdth + "명";
-                    document.getElementById("mdrsdOcnm").innerHTML = result[0].mdrsdOcnm;
-                    document.getElementById("mdrsdOcrt").innerHTML = result[0].mdrsdOcrt + '%';
-                    document.getElementById("mdrsdNmdth").innerHTML = result[0].mdrsdNmdth + "명";
-                    document.getElementById("zkvfOcnm").innerHTML = result[0].zkvfOcnm;
-                    document.getElementById("zkvfOcrt").innerHTML = result[0].zkvfOcrt + '%';
-                    document.getElementById("zkvfNmdth").innerHTML = result[0].zkvfNmdth + "명";
-                }
-                console.log(result);
-            },
-            error(e) {
-                console.log(e);
-            }
-        });
-    }
-</script>
 </html>

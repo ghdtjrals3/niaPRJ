@@ -1,14 +1,13 @@
 package kopo.poly.service.impl;
 
-import kopo.poly.dto.BogunsoDTO;
-import kopo.poly.dto.HospitalDTO;
-import kopo.poly.dto.No1IftDTO;
-import kopo.poly.dto.No4IftDTO;
+import kopo.poly.dto.*;
 import kopo.poly.service.IMainService;
 import kopo.poly.util.AllSetDTOUtil;
 import kopo.poly.util.PasingUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -85,11 +84,10 @@ public class MainService implements IMainService {
     }
 
     @Override
-    public List<BogunsoDTO> getBogunso() throws IOException {
+    public List<BogunsoDTO> getBogunso() throws Exception {
         log.info(this.getClass().getName() + " getBogunso Start !!");
 
-        File f = new File("src/main/resources/static/file/bogunso.csv");
-
+        File f = new File("/usr/local/csvFile/bogunso3.csv");
         FileReader fileReader = new FileReader(f);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
@@ -97,18 +95,55 @@ public class MainService implements IMainService {
 
         String line = "";
         while((line = bufferedReader.readLine()) != null) {
-            log.info(line);
             String [] splitLine = line.split(",");
             BogunsoDTO bogunsoDTO = new BogunsoDTO();
-            bogunsoDTO.setType(splitLine[0]);
+            bogunsoDTO.setLocationDetail(splitLine[0]);
             bogunsoDTO.setName(splitLine[1]);
-            bogunsoDTO.setLocation(splitLine[2]);
+            bogunsoDTO.setLocation(splitLine[2].substring(0,4));
+            bogunsoDTO.setAddr(splitLine[2]);
             bogunsoDTO.setPhoneNumber(splitLine[3]);
+            bogunsoDTO.setType(splitLine[5]);
+            bogunsoDTO.setTime(splitLine[6]);
             bogunsoList.add(bogunsoDTO);
         }
         bufferedReader.close();
 
         log.info(this.getClass().getName() + " getBogunso End !!");
         return bogunsoList;
+    }
+
+    @Override
+    public List<CovidPaDTO> getCovidPa() throws ParserConfigurationException, IOException, SAXException {
+        log.info(this.getClass().getName() + " .getCovidPa Start !!");
+        String url = "getCallCovid04Api";
+        String []keyArr = {"numOfRows","pageNo","std_day"};
+        String []valueArr = {"500", "1", "2022-12-20"};
+
+        Document document = PasingUtil.xmlPasing(url, keyArr, valueArr);
+
+        List<CovidPaDTO> covidPaList = AllSetDTOUtil.allSetCovidPa(document);
+        log.info(this.getClass().getName() + " .getCovidPa End !!");
+        return covidPaList;
+    }
+
+    @Override
+    public String getCovidNum() throws ParserConfigurationException, IOException, SAXException {
+        log.info(this.getClass().getName() + ".getCovidNum Start !!");
+        String url = "getCovid19CurrentStatusConfirmationsJson";
+        String []keyArr = {"numOfRows","pageNo"};
+        String []valueArr = {"100", "1"};
+
+        String todayCovidNum = "";
+        try {
+            JSONObject jsonObject = PasingUtil.jsonPasing(url, keyArr, valueArr);
+            jsonObject =(JSONObject)jsonObject.get("response");
+            JSONArray jsonArray =(JSONArray)jsonObject.get("result");
+            jsonObject = (JSONObject) jsonArray.get(0);
+            todayCovidNum = jsonObject.get("cnt7").toString();
+        } catch (NullPointerException e) {
+            todayCovidNum = "0";
+        }
+        log.info(this.getClass().getName() + ".getCovidNum End !!");
+        return todayCovidNum;
     }
 }

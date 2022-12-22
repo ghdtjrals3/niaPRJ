@@ -1,5 +1,6 @@
 package kopo.poly.util;
 
+import kopo.poly.dto.CovidPaDTO;
 import kopo.poly.dto.HospitalDTO;
 import kopo.poly.dto.No1IftDTO;
 import kopo.poly.dto.No4IftDTO;
@@ -147,5 +148,24 @@ public class AllSetDTOUtil {
             hospitalList.add(hospitalDTO);
         }
         return hospitalList;
+    }
+
+    public static List<CovidPaDTO> allSetCovidPa(Document document) {
+
+        List<CovidPaDTO> covidPaList = new ArrayList<>();
+        document.getDocumentElement().normalize();
+        NodeList nList = document.getElementsByTagName("item");
+
+        for(int temp=0; temp<nList.getLength(); temp++) {
+            Node nNode = nList.item(temp);
+            Element eElement = (Element) nNode;
+            CovidPaDTO covidPaDTO = new CovidPaDTO();
+
+            covidPaDTO.setDefCnt(PasingUtil.getTagValue("defCnt", eElement));
+            covidPaDTO.setGubun(PasingUtil.getTagValue("gubun", eElement));
+
+            covidPaList.add(covidPaDTO);
+        }
+        return covidPaList;
     }
 }

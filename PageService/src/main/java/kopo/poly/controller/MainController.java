@@ -1,9 +1,6 @@
 package kopo.poly.controller;
 
-import kopo.poly.dto.BogunsoDTO;
-import kopo.poly.dto.HospitalDTO;
-import kopo.poly.dto.No1IftDTO;
-import kopo.poly.dto.No4IftDTO;
+import kopo.poly.dto.*;
 import kopo.poly.service.IMainService;
 import kopo.poly.util.CmmUtil;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +27,12 @@ public class MainController {
 
     /*Thymeleaf boardWrite*/
     @GetMapping(value = "/covid/index")
-    public String indexPage() throws ParserConfigurationException, IOException, SAXException {
+    public String indexPage(Model model) throws ParserConfigurationException, IOException, SAXException {
         log.info(this.getClass().getName() + " 인덱스 페이지 시작!");
-
+        List<CovidPaDTO> covidPaList = mainService.getCovidPa();
+        String todayCovidNum = mainService.getCovidNum();
+        model.addAttribute("covidPaList", covidPaList);
+        model.addAttribute("todayCovidNum", todayCovidNum);
         log.info(this.getClass().getName() + " 인덱스 페이지 종료!");
         return "main/index";
     }
@@ -94,9 +94,11 @@ public class MainController {
 
 
     @GetMapping(value = "/covid/publichospital")
-    public String publichospital() {
+    public String publichospital(Model model) throws Exception{
         log.info(this.getClass().getName() + " publichospital 페이지 시작!");
-
+        List<BogunsoDTO> bogunsoList = mainService.getBogunso();
+        log.info("bogunsoList size : " + bogunsoList.size());
+        model.addAttribute("bogunsoList", bogunsoList);
         log.info(this.getClass().getName() + " publichospital 페이지 종료!");
         return "main/publichospital";
     }
@@ -108,5 +110,20 @@ public class MainController {
 
         log.info(this.getClass().getName() + " RegForm 페이지 종료!");
         return "main/RegForm";
+    }
+    @GetMapping(value = "/covid/prevention1")
+    public String prevention1() {
+        log.info(this.getClass().getName() + " RegForm 페이지 시작!");
+
+        log.info(this.getClass().getName() + " RegForm 페이지 종료!");
+        return "main/prevention1";
+    }
+
+    @GetMapping(value = "/covid/preventionQ")
+    public String preventionQ() {
+        log.info(this.getClass().getName() + " RegForm 페이지 시작!");
+
+        log.info(this.getClass().getName() + " RegForm 페이지 종료!");
+        return "main/preventionQ";
     }
 }

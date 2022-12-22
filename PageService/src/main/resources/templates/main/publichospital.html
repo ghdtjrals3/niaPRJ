@@ -102,7 +102,7 @@
         <nav>
             <!-- Menu Toggle btn-->
             <div class="menu-toggle">
-                <img class="nav_logo_img img-fluid" src="images/header-logo.svg" alt="header-logo.svg">
+                <img class="nav_logo_img img-fluid" src="/images/header-logo.svg" alt="header-logo.svg">
                 <button type="button" id="menu-btn">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -169,41 +169,11 @@
     </div>
 </header>
 <br/>
-
+<div id="map" style="width:100%;height:450px;"></div>
 <br><br><br>
 <h2 style="text-align: center; color: #666666;"><strong>보건소 조회</strong></h2><br>
 
-
-<div class="select-box" style="text-align: center">
-    <ul class="form-year">
-        <h4><strong> <li class="select-title">지역명</li></strong></h4>
-        <li class="select-cnt">
-            <label >조회 지역</label>
-            <select class="w40" name="startDt">
-                <option value="서울">대전</option>
-                <option value="경기">경상북도</option>
-                <option value="부산">경상남도</option>
-                <option value="전체" selected="selected">전체</option>
-            </select>
-        </li>
-    </ul>
-    <ul class="form-location">
-        <h4><strong> <li class="select-title">시군구명</li></strong></h4>
-        <li class="select-cnt">
-            <label >시군구명</label>
-            <select class="w40" name="startDt">
-                <option value="창원시">창원시</option>
-                <option value="진주시">진주시</option>
-                <option value="통영시">통영시</option>
-                <option value="전체" selected="selected">전체</option>
-            </select>
-        </li>
-    </ul>
-</div>
-
 <br>
-<a href="#"><div class ="footer_mailchimp_form" style="text-align: center; " > <input type="submit" value = "조회하기" style="background-color: #666666; width: 150px; height: 50px; border-radius: 5px; border: none; color: #fff;"></input></div></a>
-
 <br>
 <div class="divTable minimalistBlack">
 
@@ -221,26 +191,20 @@
     </div>
 
     <div class="divTableBody" >
-        <div class="divTableRow">
-            <div class="divTableCell" style="width: 100px;">경상남도</div>  <!--지역-->
-            <div class="divTableCell" style="width: 100px;">창원시</div>   <!--시군-->
-
-            <!--진료소명 클릭시 상세페이지로 이동    , 지도, 길찾기 보여줄 예정 -->
-            <div class="divTableCell" style="width: 150px;">동전   <!--보건진료소명-->
-                <%--        <a href="javascript:doDetail('');">--%>
-                    <%--        <%= %>--%>
-                    <%--      </a>--%>
+        <th:block th:each="bogunsoDTO : ${bogunsoList}">
+            <div class="divTableRow">
+                <div class="divTableCell" style="width: 100px;">[[${bogunsoDTO.location}]]</div>  <!--지역-->
+                <div class="divTableCell" style="width: 100px;">[[${bogunsoDTO.locationDetail}]]</div>   <!--시군-->
+                <!--진료소명 클릭시 상세페이지로 이동    , 지도, 길찾기 보여줄 예정 -->
+                <div class="divTableCell" style="width: 150px;">   <!--보건진료소명-->
+                    <a th:text="${bogunsoDTO.name}" th:onclick="findHospital([[${bogunsoDTO.addr}]])"></a>
+                </div>
+                <div class="divTableCell" style="width: 400px;">[[${bogunsoDTO.addr}]]</div> <!--소재지-->
+                <div class="divTableCell" style="width: 150px;">[[${bogunsoDTO.phoneNumber}]]</div> <!--연락처-->
+                <div class="divTableCell" style="width: 150px;">[[${bogunsoDTO.type}]]</div> <!--진료과목-->
+                <div class="divTableCell" style="width: 150px;">[[${bogunsoDTO.time}]]</div>  <!--진료시간-->
             </div>
-
-            <div class="divTableCell" style="width: 400px;">경상남도 창원시 의창구 북면 동전무동길 367</div> <!--소재지-->
-            <div class="divTableCell" style="width: 150px;">055-529-0265</div> <!--연락처-->
-            <div class="divTableCell" style="width: 150px;">내과</div> <!--진료과목-->
-            <div class="divTableCell" style="width: 150px;">09:00~18:00</div>  <!--진료시간-->
-
-        </div>
-
-
-
+        </th:block>
     </div>
 
 </div>
@@ -321,156 +285,74 @@
 <!-- Custom script for all pages -->
 <script src="/js/script.js"></script>
 </body>
-<script type="text/javascript">
-    function getNo2Ift() {
-        var year = document.getElementById("year").value;
-        var dsvd = document.getElementById("dsvd").value;
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=38daa9c2fb1d3938bb0e5636df3d93e8&libraries=services"></script>
+<script th:inline="javascript">
+    var bogunsoList = [[${bogunsoList}]];
+</script>
+<script>
+    // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+    var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
-        console.log(year);
-        console.log(dsvd);
-
-        var param = {
-            year : year,
-            dsvd : dsvd
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
         };
 
-        $.ajax({
-            type : 'POST',
-            url : '/covid/getNo4Ift',
-            data : JSON.stringify(param),
-            dataType : 'json',
-            contentType : 'application/json',
-            success(result) {
-                if(result.length===0) {
-                    document.getElementById("pstOcnm").innerHTML = 0;
-                    document.getElementById("pstOcrt").innerHTML = '0%';
-                    document.getElementById("pstNmdth").innerHTML = 0  + "명";
-                    document.getElementById("ylfvOcnm").innerHTML = 0;
-                    document.getElementById("ylfvOcrt").innerHTML = '0%';
-                    document.getElementById("ylfvNmdth").innerHTML = 0  + "명";
-                    document.getElementById("dgfvrOcnm").innerHTML = 0;
-                    document.getElementById("dgfvrOcrt").innerHTML = '0%';
-                    document.getElementById("dgfvrNmdth").innerHTML = 0  + "명";
-                    document.getElementById("vrhfvOcnm").innerHTML = 0;
-                    document.getElementById("vrhfvOcrt").innerHTML = '0%';
-                    document.getElementById("vrhfvNmdth").innerHTML = 0  + "명";
-                    document.getElementById("pckOcnm").innerHTML = 0;
-                    document.getElementById("pckOcrt").innerHTML = '0%';
-                    document.getElementById("pckNmdth").innerHTML = 0  + "명";
-                    document.getElementById("btntxOcnm").innerHTML = 0;
-                    document.getElementById("btntxOcrt").innerHTML = '0%';
-                    document.getElementById("btntxNmdth").innerHTML = 0  + "명";
-                    document.getElementById("srptsOcnm").innerHTML = 0;
-                    document.getElementById("srptsOcrt").innerHTML = '0%';
-                    document.getElementById("srptsNmdth").innerHTML = 0  + "명";
-                    document.getElementById("amifhOcnm").innerHTML = 0;
-                    document.getElementById("amifhOcrt").innerHTML = '0%';
-                    document.getElementById("amifhNmdth").innerHTML = 0  + "명";
-                    document.getElementById("swiflOcnm").innerHTML = 0;
-                    document.getElementById("swiflOcrt").innerHTML = '0%';
-                    document.getElementById("swiflNmdth").innerHTML = 0  + "명";
-                    document.getElementById("tlrmOcnm").innerHTML = 0;
-                    document.getElementById("tlrmOcrt").innerHTML = '0%';
-                    document.getElementById("tlrmNmdth").innerHTML = 0  + "명";
-                    document.getElementById("queOcnm").innerHTML = 0;
-                    document.getElementById("queOcrt").innerHTML = '0%';
-                    document.getElementById("queNmdth").innerHTML = 0  + "명";
-                    document.getElementById("wsnfvOcnm").innerHTML = 0;
-                    document.getElementById("wsnfvOcrt").innerHTML = '0%';
-                    document.getElementById("wsnfvNmdth").innerHTML = 0  + "명";
-                    document.getElementById("nwifOcnm").innerHTML = 0;
-                    document.getElementById("nwifOcrt").innerHTML = '0%';
-                    document.getElementById("nwifNmdth").innerHTML = 0  + "명";
-                    document.getElementById("lydsOcnm").innerHTML = 0;
-                    document.getElementById("lydsOcrt").innerHTML = '0%';
-                    document.getElementById("lydsNmdth").innerHTML = 0  + "명";
-                    document.getElementById("tbepOcnm").innerHTML = 0;
-                    document.getElementById("tbepOcrt").innerHTML = '0%';
-                    document.getElementById("tbepNmdth").innerHTML = 0  + "명";
-                    document.getElementById("ubrOcnm").innerHTML = 0;
-                    document.getElementById("ubrOcrt").innerHTML = '0%';
-                    document.getElementById("ubrNmdth").innerHTML = 0  + "명";
-                    document.getElementById("chfvrOcnm").innerHTML = 0;
-                    document.getElementById("chfvrOcrt").innerHTML = '0%';
-                    document.getElementById("chfvrNmdth").innerHTML = 0  + "명";
-                    document.getElementById("sfvtsOcnm").innerHTML = 0;
-                    document.getElementById("sfvtsOcrt").innerHTML = '0%';
-                    document.getElementById("sfvtsNmdth").innerHTML = 0  + "명";
-                    document.getElementById("mdrsdOcnm").innerHTML = 0;
-                    document.getElementById("mdrsdOcrt").innerHTML = '0%';
-                    document.getElementById("mdrsdNmdth").innerHTML = 0  + "명";
-                    document.getElementById("zkvfOcnm").innerHTML = 0;
-                    document.getElementById("zkvfOcrt").innerHTML = '0%';
-                    document.getElementById("zkvfNmdth").innerHTML = 0  + "명";
+    // 지도를 생성합니다
+    var map = new kakao.maps.Map(mapContainer, mapOption);
 
-                } else {
-                    document.getElementById("pstOcnm").innerHTML = result[0].pstOcnm;
-                    document.getElementById("pstOcrt").innerHTML = result[0].pstOcrt + '%';
-                    document.getElementById("pstNmdth").innerHTML = result[0].pstNmdth + "명";
-                    document.getElementById("ylfvOcnm").innerHTML = result[0].ylfvOcnm;
-                    document.getElementById("ylfvOcrt").innerHTML = result[0].ylfvOcrt + '%';
-                    document.getElementById("ylfvNmdth").innerHTML = result[0].ylfvNmdth + "명";
-                    document.getElementById("dgfvrOcnm").innerHTML = result[0].dgfvrOcnm;
-                    document.getElementById("dgfvrOcrt").innerHTML = result[0].dgfvrOcrt + '%';
-                    document.getElementById("dgfvrNmdth").innerHTML = result[0].dgfvrNmdth + "명";
-                    document.getElementById("vrhfvOcnm").innerHTML = result[0].vrhfvOcnm;
-                    document.getElementById("vrhfvOcrt").innerHTML = result[0].vrhfvOcrt + '%';
-                    document.getElementById("vrhfvNmdth").innerHTML = result[0].vrhfvNmdth + "명";
-                    document.getElementById("pckOcnm").innerHTML = result[0].pckOcnm;
-                    document.getElementById("pckOcrt").innerHTML = result[0].pckOcrt + '%';
-                    document.getElementById("pckNmdth").innerHTML = result[0].pckNmdth + "명";
-                    document.getElementById("btntxOcnm").innerHTML = result[0].btntxOcnm;
-                    document.getElementById("btntxOcrt").innerHTML = result[0].btntxOcrt + '%';
-                    document.getElementById("btntxNmdth").innerHTML = result[0].btntxNmdth + "명";
-                    document.getElementById("srptsOcnm").innerHTML = result[0].srptsOcnm;
-                    document.getElementById("srptsOcrt").innerHTML = result[0].srptsOcrt + '%';
-                    document.getElementById("srptsNmdth").innerHTML = result[0].srptsNmdth + "명";
-                    document.getElementById("amifhOcnm").innerHTML = result[0].amifhOcnm;
-                    document.getElementById("amifhOcrt").innerHTML = result[0].amifhOcrt + '%';
-                    document.getElementById("amifhNmdth").innerHTML = result[0].amifhNmdth + "명";
-                    document.getElementById("swiflOcnm").innerHTML = result[0].swiflOcnm;
-                    document.getElementById("swiflOcrt").innerHTML = result[0].swiflOcrt + '%';
-                    document.getElementById("swiflNmdth").innerHTML = result[0].swiflNmdth + "명";
-                    document.getElementById("tlrmOcnm").innerHTML = result[0].tlrmOcnm;
-                    document.getElementById("tlrmOcrt").innerHTML = result[0].tlrmOcrt + '%';
-                    document.getElementById("tlrmNmdth").innerHTML = result[0].tlrmNmdth + "명";
-                    document.getElementById("queOcnm").innerHTML = result[0].queOcnm;
-                    document.getElementById("queOcrt").innerHTML = result[0].queOcrt + '%';
-                    document.getElementById("queNmdth").innerHTML = result[0].queNmdth + "명";
-                    document.getElementById("wsnfvOcnm").innerHTML = result[0].wsnfvOcnm;
-                    document.getElementById("wsnfvOcrt").innerHTML = result[0].wsnfvOcrt + '%';
-                    document.getElementById("wsnfvNmdth").innerHTML = result[0].wsnfvNmdth + "명";
-                    document.getElementById("nwifOcnm").innerHTML = result[0].nwifOcnm;
-                    document.getElementById("nwifOcrt").innerHTML = result[0].nwifOcrt + '%';
-                    document.getElementById("nwifNmdth").innerHTML = result[0].nwifNmdth + "명";
-                    document.getElementById("lydsOcnm").innerHTML = result[0].lydsOcnm;
-                    document.getElementById("lydsOcrt").innerHTML = result[0].lydsOcrt + '%';
-                    document.getElementById("lydsNmdth").innerHTML = result[0].lydsNmdth + "명";
-                    document.getElementById("tbepOcnm").innerHTML = result[0].tbepOcnm;
-                    document.getElementById("tbepOcrt").innerHTML = result[0].tbepOcrt + '%';
-                    document.getElementById("tbepNmdth").innerHTML = result[0].tbepNmdth + "명";
-                    document.getElementById("ubrOcnm").innerHTML = result[0].ubrOcnm;
-                    document.getElementById("ubrOcrt").innerHTML = result[0].ubrOcrt + '%';
-                    document.getElementById("ubrNmdth").innerHTML = result[0].ubrNmdth + "명";
-                    document.getElementById("chfvrOcnm").innerHTML = result[0].chfvrOcnm;
-                    document.getElementById("chfvrOcrt").innerHTML = result[0].chfvrOcrt + '%';
-                    document.getElementById("chfvrNmdth").innerHTML = result[0].chfvrNmdth + "명";
-                    document.getElementById("sfvtsOcnm").innerHTML = result[0].sfvtsOcnm;
-                    document.getElementById("sfvtsOcrt").innerHTML = result[0].sfvtsOcrt + '%';
-                    document.getElementById("sfvtsNmdth").innerHTML = result[0].sfvtsNmdth + "명";
-                    document.getElementById("mdrsdOcnm").innerHTML = result[0].mdrsdOcnm;
-                    document.getElementById("mdrsdOcrt").innerHTML = result[0].mdrsdOcrt + '%';
-                    document.getElementById("mdrsdNmdth").innerHTML = result[0].mdrsdNmdth + "명";
-                    document.getElementById("zkvfOcnm").innerHTML = result[0].zkvfOcnm;
-                    document.getElementById("zkvfOcrt").innerHTML = result[0].zkvfOcrt + '%';
-                    document.getElementById("zkvfNmdth").innerHTML = result[0].zkvfNmdth + "명";
-                }
-                console.log(result);
-            },
-            error(e) {
-                console.log(e);
+    // 장소 검색 객체를 생성합니다
+    var ps = new kakao.maps.services.Places();
+
+    // 키워드로 장소를 검색합니다
+    for(var i=0; i<bogunsoList.length; i++) {
+        ps.keywordSearch(bogunsoList[i].addr, placesSearchCB);
+
+    }
+
+    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+    function placesSearchCB (data, status, pagination) {
+        if (status === kakao.maps.services.Status.OK) {
+
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+            // LatLngBounds 객체에 좌표를 추가합니다
+            var bounds = new kakao.maps.LatLngBounds();
+
+            for (var i=0; i<data.length; i++) {
+                displayMarker(data[i]);
+                bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
             }
+
+            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+            map.setBounds(bounds);
+        }
+    }
+
+    // 지도에 마커를 표시하는 함수입니다
+    function displayMarker(place) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: new kakao.maps.LatLng(place.y, place.x)
+        });
+
+        // 마커에 클릭이벤트를 등록합니다
+        kakao.maps.event.addListener(marker, 'click', function() {
+            // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+            infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+            infowindow.open(map, marker);
         });
     }
+
 </script>
+<script type="text/javascript" th:inline="javascript">
+    function findHospital(des) {
+        console.log("des : " + des);
+        var url = "https://map.kakao.com/?sName=%EA%B0%95%EC%84%9C%ED%8F%B4%EB%A6%AC%ED%85%8D&eName=" + des;
+        window.open(url);
+    }
+</script>
+
 </html>
